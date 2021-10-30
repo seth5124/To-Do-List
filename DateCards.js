@@ -5,7 +5,6 @@ import { showPopup } from "./popup.js";
 import { isToday, isTomorrow } from "./DateUtilities.js";
 
 export function DateCards(project) {
-  console.log(project);
   let dateEntries = project.tasksByDate();
   let dateCards = document.createElement("div");
   dateCards.id = "DateCards";
@@ -98,7 +97,6 @@ export function DateCards(project) {
 
   /**creates blank task card with new task button */
   function BlankdateCard(project) {
-    console.log(project);
     //Creates Task Card element
     let blankdateCard = document.createElement("div");
     blankdateCard.classList.add("dateCard");
