@@ -3,6 +3,9 @@
 import { DateCards } from "./DateCards.js";
 import { NewProjectForm } from "./NewProjectForm.js";
 import { getProjects } from "./DB.js";
+import { showPopup } from "./popup.js";
+import { isToday, isTomorrow } from "./DateUtilities.js";
+
 
 export function Sidebar() {
   //Creates Sidebar div
@@ -22,32 +25,7 @@ export function Sidebar() {
   return sidebar;
 }
 
-/**
- * Determines if given date is today
- * @param {Date} date
- * @returns Boolean
- */
-function isToday(date) {
-  let today = new Date();
-  return (
-    date.getDate() + 1 == today.getDate() &&
-    date.getMonth() == today.getMonth() &&
-    date.getFullYear() == today.getFullYear()
-  );
-}
-/**
- * Deterimines if given date is tomorrow
- * @param {Date} date
- * @returns Boolean
- */
-function isTomorrow(date) {
-  let today = new Date();
-  return (
-    date.getDate() + 1 == today.getDate() + 1 &&
-    date.getMonth() == today.getMonth() &&
-    date.getFullYear() == today.getFullYear()
-  );
-}
+
 /**Creates a projectEntry div for adding new projects
  * */
 function NewProjectButton() {
@@ -56,20 +34,13 @@ function NewProjectButton() {
   let buttonText = document.createElement("h3");
   buttonText.innerHTML = "+";
   button.appendChild(buttonText);
-  button.addEventListener("click", newProjectForm);
+  button.addEventListener("click", () =>{
+    showPopup(NewProjectForm());
+  });
 
   return button;
 }
 
-/**
- * Spawns a popup form for adding a new project
- */
-function newProjectForm() {
-  let content = document.getElementById("content");
-  let body = document.getElementsByTagName("BODY")[0];
-  body.insertBefore(NewProjectForm(), content);
-  content.classList.toggle("blur");
-}
 
 /**
  *
