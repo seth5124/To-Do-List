@@ -2,6 +2,7 @@ import { NewTaskForm } from "./NewTaskForm.js";
 import { removeTaskFromProject } from "./DB.js";
 import { TaskCard } from "./TaskCard.js";
 import { showPopup } from "./popup.js";
+import { isToday, isTomorrow } from "./DateUtilities.js";
 
 export function DateCards(project) {
   console.log(project);
@@ -120,32 +121,6 @@ export function DateCards(project) {
   return dateCards;
 }
 
-/**
- * Determines if given date is today
- * @param {Date} date
- * @returns Boolean
- */
-function isToday(date) {
-  let today = new Date();
-  return (
-    date.getDate() + 1 == today.getDate() &&
-    date.getMonth() == today.getMonth() &&
-    date.getFullYear() == today.getFullYear()
-  );
-}
-/**
- * Deterimines if given date is tomorrow
- * @param {Date} date
- * @returns Boolean
- */
-function isTomorrow(date) {
-  let today = new Date();
-  return (
-    date.getDate() + 1 == today.getDate() + 1 &&
-    date.getMonth() == today.getMonth() &&
-    date.getFullYear() == today.getFullYear()
-  );
-}
 
 /**Generates an inline SVG version of the check.svg file in the assets folder
  * This is so CSS can style the element
