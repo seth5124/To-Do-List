@@ -1,13 +1,21 @@
 export function TaskCard(task) {
-  let taskDueDate = `${task.dueDate.getMonth()}/${task.dueDate.getDate() + 1}`;
+  let taskDueDateFormatted = `${task.dueDate.getMonth()}/${task.dueDate.getDate() + 1}`;
 
   //Creates task card
   let taskCard = document.createElement("div");
 
   //h1 tag for task title and due date
+  let taskHeader = document.createElement('div');
   let taskTitle = document.createElement("h1");
-  taskTitle.innerHTML = `${task.name}  - ${taskDueDate}`;
-  taskCard.appendChild(taskTitle);
+  taskTitle.classList.add('taskHeaderElement');
+  taskTitle.innerHTML = `${task.name}`;
+  let taskDueDate = document.createElement('h1');
+  taskDueDate.classList.add('taskHeaderElement');
+  taskDueDate.innerHTML = `${taskDueDateFormatted}`;
+  taskHeader.appendChild(taskTitle);
+  taskHeader.append(Object.assign(document.createElement('h1'),{innerHTML: ' - ', className: 'taskHeaderElement'}));
+  taskHeader.appendChild(taskDueDate);
+  taskCard.appendChild(taskHeader);
 
   //P tag for task description
   let taskDescription = document.createElement("p");
@@ -84,6 +92,6 @@ function loadNotes(task) {
 }
 
 function editNote(note){
-  
+
 
 }

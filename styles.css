@@ -180,3 +180,7 @@ h3 {
 .subMenuPastDue {
   color: red;
 }
+
+.taskHeaderElement{
+  display: inline;
+}
