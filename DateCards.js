@@ -56,10 +56,12 @@ export function DateCards(project) {
 
       let deleteButton = document.createElement("button");
       deleteButton.innerHTML = "X";
+      
       deleteButton.addEventListener("click", function (e) {
         e.stopPropagation();
         console.log(e);
-        removeTaskFromProject(project, task);
+
+        removeTaskFromProject(project, currentTask);
         document.dispatchEvent(
           new CustomEvent("tasksUpdated", { detail: project })
         );
