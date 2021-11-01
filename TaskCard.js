@@ -79,7 +79,7 @@ function loadNotes(task) {
     let deleteTaskButton = document.createElement('button');
     deleteTaskButton.innerHTML = 'x';
     deleteTaskButton.addEventListener('click', ()=>{
-      task.removeNote(note);
+      task.removeNote(notes[note]);
       console.log(task.notes);
       document.getElementById('taskNoteList').replaceWith(loadNotes(task));
     })
