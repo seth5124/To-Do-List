@@ -46,6 +46,7 @@ export function TaskCard(task) {
     let newNoteBox = document.createElement("input");
     let taskNoteList = document.getElementById("taskNoteList");
     taskNoteList.insertBefore(newNoteBox, taskNoteList.firstChild);
+    newNoteBox.focus();
     newNoteBox.addEventListener("keyup", (event) => {
       if (event.key === "Enter") {
         task.addNote(newNoteBox.value);

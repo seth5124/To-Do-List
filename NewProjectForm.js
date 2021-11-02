@@ -6,6 +6,7 @@ export function NewProjectForm() {
   //Div element housing the form elemnets
   let newProjectForm = document.createElement("div");
   newProjectForm.id = "popup";
+  
 
   //Form header in an h1 tag
   let formHeader = document.createElement("h1");
