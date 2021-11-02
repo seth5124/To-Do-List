@@ -10,7 +10,9 @@ export function showPopup(popup) {
   content.classList.toggle("blur");
 
   //focuses first input element
-  popup.getElementsByTagName('input')[0].focus();
+  if(popup.getElementsByTagName('input')[0]){
+    popup.getElementsByTagName('input')[0].focus();
+  }
 }
 
 export function closePopup() {
