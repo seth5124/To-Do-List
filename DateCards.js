@@ -108,6 +108,7 @@ export function DateCards(project) {
     plusIcon.src = "./assets/plus.svg";
     blankdateCard.appendChild(plusIcon);
     plusIcon.classList.add("plusIcon");
+    plusIcon.setAttribute('draggable', false);
     plusIcon.addEventListener("click", function (e) {
       e.preventDefault();
       showPopup(NewTaskForm(project));
