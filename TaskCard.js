@@ -1,3 +1,5 @@
+import { closePopup } from "./popup.js";
+
 /**
  * Creates a task card for the given task
  * @param {Task} Tas 
@@ -84,8 +86,7 @@ export function TaskCard(task) {
   closeButton.classList.add("closeFormButton");
   closeButton.innerHTML = "X";
   closeButton.addEventListener("click", () => {
-    document.getElementById("popup").remove();
-    document.getElementById("content").classList.toggle("blur");
+    closePopup();
   });
 
   taskCard.appendChild(closeButton);
