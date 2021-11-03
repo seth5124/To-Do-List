@@ -25,6 +25,11 @@ export class Task {
   get dueDate() {
     return this._dueDate;
   }
+  dueDateFormatted(){
+    return `${this.dueDate.getMonth() + 1}/${
+      this.dueDate.getDate() + 1
+    }`
+  }
   set dueDate(date) {
     this._dueDate = date;
   }

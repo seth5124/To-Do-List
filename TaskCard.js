@@ -21,7 +21,11 @@ export function TaskCard(task) {
   //Not implemented fully
   //Will allow editing of the task title
   taskTitle.addEventListener('dblclick',()=>{
-    editElement(taskTitle);
+    editElement(taskTitle,()=>{
+      taskTitle.innerHTML=`${task.name}`
+    },(newName)=>{
+      task.name = newName;
+    });
   })
   taskTitle.innerHTML = `${task.name}`;
 
@@ -31,7 +35,15 @@ export function TaskCard(task) {
    */
   let taskDueDate = document.createElement("h1");
   taskDueDate.classList.add("taskHeaderElement");
-  taskDueDate.innerHTML = `${taskDueDateFormatted}`;
+  taskDueDate.innerHTML = `${task.dueDateFormatted()}`;
+  taskDueDate.addEventListener('dblclick', ()=>{
+    editElement(taskDueDate, ()=>{
+      console.log(task.dueDate);
+      taskDueDate.innerHTML = task.dueDateFormatted();
+    },(newDate)=>{
+      task.dueDate = new Date(newDate);
+    },'date')
+  })
   taskHeader.appendChild(taskTitle);
   taskHeader.append(
     Object.assign(document.createElement("h1"), {
@@ -116,25 +128,16 @@ function loadNotes(task) {
     taskNote.innerHTML = notes[note];
     
     //Handles editing notes on double click
-    taskNote.addEventListener("click",() => {
-      console.log("Edit!");
-      let originalNode = taskNote;
-      let editBox = document.createElement("input");
-      taskNote.replaceWith(editBox);
-      editBox.addEventListener("keyup", (e) => {
-        if (e.key == "Enter") {
-          let newValue = editBox.value;
-          originalNode.innerHTML = newValue;
-          notes[note] = newValue;
-          editBox.replaceWith(originalNode);
-      document.getElementById("taskNoteList").replaceWith(loadNotes(task));
-    
-        }
-      });
-
+    taskNote.addEventListener("dblclick",() => {
+      editElement(taskNote,()=>{
+        document.getElementById("taskNoteList").replaceWith(loadNotes(task));
+      },
+      (newNote)=>{
+        notes[note] = newNote;
+      })
     });
 
-    //Delete button for each note
+    //Delete button for each note     
     let deleteTaskButton = document.createElement("button");
     deleteTaskButton.innerHTML = "x";
     deleteTaskButton.addEventListener("click", (e) => {
@@ -151,3 +154,28 @@ function loadNotes(task) {
   return taskNoteList;
 }
 
+/**
+ *  Replaces a node with an edit box that will update that node's data and HTML
+ * @param {Node} Node Node to be replaced 
+ * @param {Function} reloadFunction Function that should reload the element
+ * @param {Function} replaceFunction Function that should handle updating the data
+ * @param {Type} inputType Type of input that should be generated to handle the data
+ */
+function editElement(node, reloadFunction, replaceFunction,inputType = 'text'){
+  let originalNode = node;
+  let editBox = document.createElement("input");
+  editBox.setAttribute('type',inputType);
+  node.replaceWith(editBox);
+  editBox.value = originalNode.innerHTML;
+  editBox.focus();
+  editBox.addEventListener("keyup", (e) => {
+    if (e.key == "Enter") {
+      let newValue = editBox.value;
+      originalNode.innerHTML = newValue;
+      editBox.replaceWith(originalNode);
+      replaceFunction(newValue);
+      reloadFunction();
+    }
+  });
+
+}
