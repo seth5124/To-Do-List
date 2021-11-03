@@ -150,20 +150,3 @@ function loadNotes(task) {
   return taskNoteList;
 }
 
-//take in a node
-//replace it with an input box
-//enter box "on enter" => replace the input box with the original node with the new value
-//working almost but need to figure out how to get it replacing properly
-function editElement(node) {
-  let originalNode = node;
-  let editBox = document.createElement("input");
-  node.replaceWith(editBox);
-  editBox.addEventListener("keyup", (e) => {
-    if (e.key == "Enter") {
-      newValue = editBox.value;
-      originalNode.innerHTML = newValue;
-      editBox.replaceWith(originalNode);
-
-    }
-  });
-}
