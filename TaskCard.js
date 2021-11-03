@@ -115,10 +115,21 @@ function loadNotes(task) {
     taskNote.innerHTML = notes[note];
     
     //Handles editing notes on double click
-    taskNote.addEventListener("click", () => {
+    taskNote.addEventListener("click",() => {
       console.log("Edit!");
-      editElement(taskNote);
+      let originalNode = taskNote;
+      let editBox = document.createElement("input");
+      taskNote.replaceWith(editBox);
+      editBox.addEventListener("keyup", (e) => {
+        if (e.key == "Enter") {
+          let newValue = editBox.value;
+          originalNode.innerHTML = newValue;
+          notes[note] = newValue;
+          editBox.replaceWith(originalNode);
       document.getElementById("taskNoteList").replaceWith(loadNotes(task));
+    
+        }
+      });
 
     });
 
@@ -133,7 +144,6 @@ function loadNotes(task) {
     });
     taskNote.appendChild(deleteTaskButton);
 
-    taskNote.addEventListener("click", editElement(taskNote));
     taskNoteList.appendChild(taskNote);
   }
 
@@ -150,7 +160,7 @@ function editElement(node) {
   node.replaceWith(editBox);
   editBox.addEventListener("keyup", (e) => {
     if (e.key == "Enter") {
-      let newValue = editBox.value;
+      newValue = editBox.value;
       originalNode.innerHTML = newValue;
       editBox.replaceWith(originalNode);
 
