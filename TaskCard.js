@@ -1,3 +1,8 @@
+/**
+ * Creates a task card for the given task
+ * @param {Task} Tas 
+ * @returns Div containing a task card popup containing the task details
+ */
 export function TaskCard(task) {
   let taskDueDateFormatted = `${task.dueDate.getMonth()}/${
     task.dueDate.getDate() + 1
@@ -10,10 +15,18 @@ export function TaskCard(task) {
   let taskHeader = document.createElement("div");
   let taskTitle = document.createElement("h1");
   taskTitle.classList.add("taskHeaderElement");
+
+  //Not implemented fully
+  //Will allow editing of the task title
   taskTitle.addEventListener('dblclick',()=>{
     editElement(taskTitle);
   })
   taskTitle.innerHTML = `${task.name}`;
+
+  /**
+   * Task title and due date are seperate elements
+   * so they can be clicked and edited individually
+   */
   let taskDueDate = document.createElement("h1");
   taskDueDate.classList.add("taskHeaderElement");
   taskDueDate.innerHTML = `${taskDueDateFormatted}`;
@@ -35,10 +48,11 @@ export function TaskCard(task) {
   //Container for the notes list and header
   let notesListContainer = document.createElement("div");
 
-  
+  //Header for the notes section
   let notesHeader = document.createElement("h4");
   notesHeader.innerHTML = "Notes";
 
+  //Button to add a new note
   let newNoteButton = document.createElement("img");
   newNoteButton.src = "./assets/pencil.svg";
   newNoteButton.classList.add("pencilIcon");
@@ -56,14 +70,16 @@ export function TaskCard(task) {
   });
   notesHeader.appendChild(newNoteButton);
 
-
+  
   notesListContainer.appendChild(notesHeader);
 
+  //calls loadNotes and appends the result to the task list
   let taskNoteList = loadNotes(task);
   notesListContainer.appendChild(taskNoteList);
 
   taskCard.appendChild(notesListContainer);
 
+  //Button to close the task card
   let closeButton = document.createElement("button");
   closeButton.classList.add("closeFormButton");
   closeButton.innerHTML = "X";
@@ -77,15 +93,28 @@ export function TaskCard(task) {
   return taskCard;
 }
 
+/**
+ *  Returns a ul with li elements for each note the task has
+ * @param {Task} Task object containing notes 
+ * @returns Div containing li objects for each note
+ */
 function loadNotes(task) {
+  
+  //Pulls notes from task objects
   let notes = task.notes;
+
+  //ul element containing all lists
   let taskNoteList = document.createElement("ul");
   taskNoteList.classList.add("taskNoteList");
   taskNoteList.id = "taskNoteList";
+
+  //Iterating over notes list
   for (let note in notes) {
     let taskNote = document.createElement("li");
     taskNote.classList.add("taskNote");
     taskNote.innerHTML = notes[note];
+    
+    //Handles editing notes on double click
     taskNote.addEventListener("click", () => {
       console.log("Edit!");
       editElement(taskNote);
@@ -93,6 +122,7 @@ function loadNotes(task) {
 
     });
 
+    //Delete button for each note
     let deleteTaskButton = document.createElement("button");
     deleteTaskButton.innerHTML = "x";
     deleteTaskButton.addEventListener("click", (e) => {
