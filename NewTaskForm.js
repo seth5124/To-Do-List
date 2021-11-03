@@ -1,4 +1,5 @@
 import { addTaskToProject } from "./DB.js";
+import { closePopup } from "./popup.js";
 import { Task } from "./task.js";
 
 export function NewTaskForm(project) {
@@ -44,10 +45,8 @@ export function NewTaskForm(project) {
     document.dispatchEvent(
       new CustomEvent("tasksUpdated", { detail: project })
     );
-
-    //Closes popup
-    document.getElementById("popup").remove();
-    document.getElementById("content").classList.toggle("blur");
+    
+    closePopup();
   });
   newTaskForm.appendChild(submitButton);
 
