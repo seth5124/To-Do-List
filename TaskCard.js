@@ -179,6 +179,7 @@ function editElement(node, reloadFunction, replaceFunction,inputType = 'text'){
     if (e.key == "Enter") {
       let newValue = editBox.value;
       originalNode.innerHTML = newValue;
+      editBox.blur();
       editBox.replaceWith(originalNode);
       replaceFunction(newValue);
       reloadFunction();
