@@ -59,7 +59,10 @@ export function TaskCard(task) {
   taskDescription.innerHTML = task.description;
   taskDescription.addEventListener('dblclick',()=>{
     editElement(taskDescription,()=>{
-
+      taskDescription.innerHTML = task.description;
+    },
+    (newDescription)=>{
+      task.description = newDescription;
     })
   })
   taskCard.appendChild(taskDescription);
