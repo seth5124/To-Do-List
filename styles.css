@@ -184,6 +184,10 @@ h3 {
 .subMenuPastDue {
   color: red;
 }
+.taskNote{
+  display: inline;
+  
+}
 
 .taskHeaderElement{
   display: inline;
