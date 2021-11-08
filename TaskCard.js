@@ -57,6 +57,11 @@ export function TaskCard(task) {
   //P tag for task description
   let taskDescription = document.createElement("p");
   taskDescription.innerHTML = task.description;
+  taskDescription.addEventListener('dblclick',()=>{
+    editElement(taskDescription,()=>{
+
+    })
+  })
   taskCard.appendChild(taskDescription);
 
   //Container for the notes list and header
@@ -123,7 +128,8 @@ function loadNotes(task) {
 
   //Iterating over notes list
   for (let note in notes) {
-    let taskNote = document.createElement("li");
+    let taskNoteDiv = document.createElement('li');
+    let taskNote = document.createElement("div");
     taskNote.classList.add("taskNote");
     taskNote.innerHTML = notes[note];
     
@@ -146,9 +152,10 @@ function loadNotes(task) {
       console.log(task.notes);
       document.getElementById("taskNoteList").replaceWith(loadNotes(task));
     });
-    taskNote.appendChild(deleteTaskButton);
-
-    taskNoteList.appendChild(taskNote);
+    taskNoteDiv.appendChild(taskNote);
+    taskNoteDiv.appendChild(deleteTaskButton);
+    
+    taskNoteList.appendChild(taskNoteDiv);
   }
 
   return taskNoteList;
