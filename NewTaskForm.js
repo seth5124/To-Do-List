@@ -55,8 +55,7 @@ export function NewTaskForm(project) {
   closeButton.classList.add("closeFormButton");
   closeButton.innerHTML = "X";
   closeButton.addEventListener("click", () => {
-    document.getElementById("popup").remove();
-    document.getElementById("content").classList.toggle("blur");
+    closePopup();
   });
   newTaskForm.appendChild(closeButton);
   return newTaskForm;

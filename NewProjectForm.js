@@ -28,8 +28,7 @@ export function NewProjectForm() {
     addProject(project);
     console.log(project);
     document.dispatchEvent(new CustomEvent("projectChanged", {detail: project}));
-    document.getElementById("popup").remove();
-    document.getElementById("content").classList.toggle("blur");
+    closePopup();
   });
   newProjectForm.appendChild(submitButton);
 
