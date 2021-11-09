@@ -1,4 +1,5 @@
 import { closePopup } from "./popup.js";
+import pencilSVG from "../assets/pencil.svg";
 
 /**
  * Creates a task card for the given task
@@ -76,7 +77,7 @@ export function TaskCard(task) {
 
   //Button to add a new note
   let newNoteButton = document.createElement("img");
-  newNoteButton.src = "./assets/pencil.svg";
+  newNoteButton.src = pencilSVG;
   newNoteButton.classList.add("pencilIcon");
   newNoteButton.addEventListener("click", (e) => {
     let newNoteBox = document.createElement("input");

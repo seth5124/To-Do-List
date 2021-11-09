@@ -3,9 +3,12 @@ import { Sidebar } from "./Sidebar.js";
 import { addProject, getProjects, addTaskToProject } from "./DB.js";
 import { DateCards } from "./DateCards.js";
 import { TopBar } from "./TopBar.js";
+import '../css/styles.css';
 
 let mainProject = new Project("Main Project");
 addProject(mainProject);
+
+
 
 let activeProject = mainProject;
 

@@ -4,6 +4,9 @@ import { TaskCard } from "./TaskCard.js";
 import { showPopup } from "./popup.js";
 import { isToday, isTomorrow } from "./DateUtilities.js";
 
+import plusSVG from "../assets/plus.svg"
+
+
 export function DateCards(project) {
   let dateEntries = project.tasksByDate();
   let dateCards = document.createElement("div");
@@ -41,6 +44,7 @@ export function DateCards(project) {
       dateCardTitle.innerHTML = "Tomorrow";
     } else {
       dateCardTitle.innerHTML = `${date.getMonth() + 1}/${date.getDate() + 1}`;
+      //dateCardTitle.innerHTML = format('MM/DD');
     }
 
     /**
@@ -77,7 +81,7 @@ export function DateCards(project) {
       //Creates img element for the "is done "checkbox
       let checkBox = createCheckMark();
       checkBox.classList.add("check");
-      let checkImgSrc = "./assets/check.svg";
+      let checkImgSrc = "../assets/check.svg";
       checkBox.src = checkImgSrc;
 
       //Appends task name to the li
@@ -105,7 +109,7 @@ export function DateCards(project) {
     blankdateCard.classList.add("blank");
 
     let plusIcon = document.createElement("img");
-    plusIcon.src = "./assets/plus.svg";
+    plusIcon.src = plusSVG;
     blankdateCard.appendChild(plusIcon);
     plusIcon.classList.add("plusIcon");
     plusIcon.setAttribute('draggable', false);
