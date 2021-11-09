@@ -11,8 +11,8 @@ content {
     top: 0;
     left: 0;
     display: grid;
-    grid-template-rows: [topbar]5% [content]80%;
-    grid-template-columns: [sidebar] 15% [datecards] 85%;
+    grid-template-rows: [topbar]5% [content]95%;
+    grid-template-columns: [sidebar] 250px [datecards] 95%;
 }
 .blur {
     filter: blur(5px);
