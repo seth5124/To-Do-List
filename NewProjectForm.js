@@ -24,9 +24,10 @@ export function NewProjectForm() {
   submitButton.innerHTML = "Add";
   submitButton.addEventListener("click", () => {
     let name = nameInput.value;
-    addProject(new Project(name));
-
-    document.dispatchEvent(new Event("projectsUpdated"));
+    let project = new Project(name);
+    addProject(project);
+    console.log(project);
+    document.dispatchEvent(new CustomEvent("projectChanged", {detail: project}));
     document.getElementById("popup").remove();
     document.getElementById("content").classList.toggle("blur");
   });

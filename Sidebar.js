@@ -54,7 +54,8 @@ function ProjectEntry(project) {
   let addSubMenuFunc = addSubMenu.bind(projectEntry);
   projectEntry.addEventListener("click", addSubMenuFunc);
   projectEntry.addEventListener("click", () => {
-    replaceDateCards(project);
+    //replaceDateCards(project);
+    document.dispatchEvent(new CustomEvent('projectChanged',{detail: projectEntry.project}));
   });
 
   //Project title div in side bar

@@ -1,22 +1,33 @@
 import { Project } from "./project.js";
-import { Task } from "./task.js";
 import { Sidebar } from "./Sidebar.js";
 import { addProject, getProjects, addTaskToProject } from "./DB.js";
 import { DateCards } from "./DateCards.js";
+import { TopBar } from "./TopBar.js";
 
-let mainProject = new Project("Main project");
+let mainProject = new Project("Main Project");
 addProject(mainProject);
-//addTaskToProject(mainProject, new Task('Default Task',"Task spawned by default", new Date(9,14,2021)));
+
+let activeProject = mainProject;
+
 
 let content = document.getElementById("content");
+content.appendChild(TopBar(activeProject));
 content.appendChild(Sidebar(getProjects()));
+content.appendChild(DateCards(activeProject))
 
-document.addEventListener("projectsUpdated", () => {
+document.addEventListener("projectChanged", (event) => {
+  let project = event.detail;
+  activeProject = project;
+  console.log(`Project has changed. Active project should now be ${activeProject.name}`);
+  updateTopBar();
   updateSidebar();
+  updateDateCards(project);
+  
 });
 
 document.addEventListener("tasksUpdated", (event) => {
   let project = event.detail;
+  activeProject = project;
   updateDateCards(project);
   updateSidebar();
 });
@@ -28,10 +39,15 @@ function updateSidebar() {
   );
 }
 
-function updateDateCards(project) {
+function updateDateCards(project) { 
   content.replaceChild(
     DateCards(project),
     document.getElementById("DateCards")
   );
 }
+function updateTopBar(){
+  let topBar = document.getElementById('topBar');
+  topBar.replaceWith(TopBar(activeProject));
+}
+
 
