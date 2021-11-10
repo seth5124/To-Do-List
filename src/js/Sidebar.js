@@ -71,26 +71,6 @@ function ProjectEntry(project) {
 
   return projectEntry;
 
-  /**
-   * Spawns submenu on bound project enry
-   * Must be bound to a project entry first
-   */
-  function addSubMenu() {
-    if (this.children.length == 1) {
-      this.appendChild(SubMenu(this.project));
-    } else {
-      while (this.children.length > 1) {
-        this.removeChild(this.lastChild);
-      }
-    }
-
-    /**
- * Renders dropdown list of dates containing tasks
-  for a given project
- * @param {Project} project 
- * @returns Div
- */
-  }
 }
 
 /**
@@ -106,36 +86,3 @@ function replaceDateCards(project) {
   }
 }
 
-function SubMenu(project) {
-  let subMenuContainer = document.createElement("div");
-  subMenuContainer.classList.add("subMenuContainer");
-  let subMenu = document.createElement("ul");
-  let subMenuItems = [];
-  subMenu.classList.add("subMenu");
-
-  subMenuContainer.appendChild(subMenu);
-
-  /*Iterates through each date containing tasks
-    Generates a submenu for the given project */
-  for (let date in project.tasksByDate()) {
-    if (!(date in subMenu)) {
-      let subMenuItem = document.createElement("li");
-      subMenuItem.classList.add("subMenuItem");
-      if (isToday(new Date(date))) {
-        subMenuItem.innerHTML = "Today";
-      } else if (isTomorrow(new Date(date))) {
-        subMenuItem.innerHTML = "Tomorrow";
-      } else {
-        date = new Date(date);
-        subMenuItem.innerHTML = `${date.getMonth() + 1}/${date.getDate() + 1}`;
-      }
-      let today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (new Date(date).getTime() - today.getTime() < 0) {
-        subMenuItem.classList.add("subMenuPastDue");
-      }
-      subMenu.appendChild(subMenuItem);
-    }
-  }
-  return subMenuContainer;
-}
