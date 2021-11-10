@@ -51,8 +51,6 @@ function ProjectEntry(project) {
   let projectEntry = document.createElement("div");
   projectEntry.classList.add("projectEntry");
   projectEntry.project = project;
-  let addSubMenuFunc = addSubMenu.bind(projectEntry);
-  projectEntry.addEventListener("click", addSubMenuFunc);
   projectEntry.addEventListener("click", () => {
     //replaceDateCards(project);
     document.dispatchEvent(new CustomEvent('projectChanged',{detail: projectEntry.project}));
