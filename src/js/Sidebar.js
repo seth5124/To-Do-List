@@ -4,8 +4,6 @@ import { DateCards } from "./DateCards.js";
 import { NewProjectForm } from "./NewProjectForm.js";
 import { getProjects } from "./DB.js";
 import { showPopup } from "./popup.js";
-import { isToday,isTomorrow } from "date-fns";
-
 
 export function Sidebar() {
   //Creates Sidebar div
@@ -25,7 +23,6 @@ export function Sidebar() {
   return sidebar;
 }
 
-
 /**Creates a projectEntry div for adding new projects
  * */
 function NewProjectButton() {
@@ -34,13 +31,12 @@ function NewProjectButton() {
   let buttonText = document.createElement("h3");
   buttonText.innerHTML = "+";
   button.appendChild(buttonText);
-  button.addEventListener("click", () =>{
+  button.addEventListener("click", () => {
     showPopup(NewProjectForm());
   });
 
   return button;
 }
-
 
 /**
  *
@@ -52,8 +48,9 @@ function ProjectEntry(project) {
   projectEntry.classList.add("projectEntry");
   projectEntry.project = project;
   projectEntry.addEventListener("click", () => {
-    //replaceDateCards(project);
-    document.dispatchEvent(new CustomEvent('projectChanged',{detail: projectEntry.project}));
+    document.dispatchEvent(
+      new CustomEvent("projectChanged", { detail: projectEntry.project })
+    );
   });
 
   //Project title div in side bar
@@ -68,19 +65,4 @@ function ProjectEntry(project) {
   projectEntry.appendChild(projectHeader);
 
   return projectEntry;
-
 }
-
-/**
- *
- */
-function replaceDateCards(project) {
-  let content = document.getElementById("content");
-  let existingDateCards = document.getElementById("DateCards");
-  if (existingDateCards) {
-    existingDateCards.replaceWith(DateCards(project));
-  } else {
-    content.appendChild(DateCards(project));
-  }
-}
-

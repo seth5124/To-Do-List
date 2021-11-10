@@ -2,23 +2,18 @@ import { NewTaskForm } from "./NewTaskForm.js";
 import { removeTaskFromProject } from "./DB.js";
 import { TaskCard } from "./TaskCard.js";
 import { showPopup } from "./popup.js";
-import {format,isToday,isTomorrow} from "date-fns";
-
-import plusSVG from "../assets/plus.svg"
-
+import { format, isToday, isTomorrow } from "date-fns";
+import plusSVG from "../assets/plus.svg";
 
 export function DateCards(project) {
   let dateEntries = project.tasksByDate();
   let dateCards = document.createElement("div");
   dateCards.id = "DateCards";
-
   /**
    * Iterating over each date containing each date's tasks
    */
   for (let date in dateEntries) {
     date = new Date(date); //Converts to date object for easy reference
-
-
 
     //Creates Task Card element
     let dateCard = document.createElement("div");
@@ -45,8 +40,7 @@ export function DateCards(project) {
     } else if (isTomorrow(date)) {
       dateCardTitle.innerHTML = "Tomorrow";
     } else {
-
-      dateCardTitle.innerHTML = format(date, 'M/d');
+      dateCardTitle.innerHTML = format(date, "M/d");
     }
 
     /**
@@ -62,10 +56,9 @@ export function DateCards(project) {
 
       let deleteButton = document.createElement("button");
       deleteButton.innerHTML = "X";
-      
+
       deleteButton.addEventListener("click", function (e) {
         e.stopPropagation();
-
         removeTaskFromProject(project, currentTask);
         document.dispatchEvent(
           new CustomEvent("tasksUpdated", { detail: project })
@@ -103,30 +96,29 @@ export function DateCards(project) {
   }
 
   /**creates blank task card with new task button */
-  function BlankdateCard(project) {
+  function BlankDateCard(project) {
     //Creates Task Card element
-    let blankdateCard = document.createElement("div");
-    blankdateCard.classList.add("dateCard");
-    blankdateCard.classList.add("blank");
+    let blankDateCard = document.createElement("div");
+    blankDateCard.classList.add("dateCard");
+    blankDateCard.classList.add("blank");
 
     let plusIcon = document.createElement("img");
     plusIcon.src = plusSVG;
-    blankdateCard.appendChild(plusIcon);
+    blankDateCard.appendChild(plusIcon);
     plusIcon.classList.add("plusIcon");
-    plusIcon.setAttribute('draggable', false);
+    plusIcon.setAttribute("draggable", false);
     plusIcon.addEventListener("click", function (e) {
       e.preventDefault();
       showPopup(NewTaskForm(project));
     });
 
-    return blankdateCard;
+    return blankDateCard;
   }
 
-  dateCards.appendChild(BlankdateCard(project));
+  dateCards.appendChild(BlankDateCard(project));
 
   return dateCards;
 }
-
 
 /**Generates an inline SVG version of the check.svg file in the assets folder
  * This is so CSS can style the element

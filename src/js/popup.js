@@ -10,13 +10,12 @@ export function showPopup(popup) {
   content.classList.toggle("blur");
 
   //focuses first input element
-  if(popup.getElementsByTagName('input')[0]){
-    popup.getElementsByTagName('input')[0].focus();
+  if (popup.getElementsByTagName("input")[0]) {
+    popup.getElementsByTagName("input")[0].focus();
   }
 }
 
 export function closePopup() {
-
   //Destroys popup element and unblurs the back ground
   //TODO: set all other elements as non-selectable
   document.getElementById("popup").remove();

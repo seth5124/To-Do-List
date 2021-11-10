@@ -36,7 +36,7 @@ export function NewTaskForm(project) {
     //Creates task object from input values
     let name = nameInput.value;
     let description = descriptionInput.value;
-    let dueDate = parse(dateInput.value, 'yyyy-MM-dd',new Date());
+    let dueDate = parse(dateInput.value, "yyyy-MM-dd", new Date());
     let task = new Task(name, description, dueDate);
 
     //Adds task to current project
@@ -46,7 +46,7 @@ export function NewTaskForm(project) {
     document.dispatchEvent(
       new CustomEvent("tasksUpdated", { detail: project })
     );
-    
+
     closePopup();
   });
   newTaskForm.appendChild(submitButton);

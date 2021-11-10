@@ -6,7 +6,6 @@ export function NewProjectForm() {
   //Div element housing the form elemnets
   let newProjectForm = document.createElement("div");
   newProjectForm.id = "popup";
-  
 
   //Form header in an h1 tag
   let formHeader = document.createElement("h1");
@@ -26,8 +25,9 @@ export function NewProjectForm() {
     let name = nameInput.value;
     let project = new Project(name);
     addProject(project);
-    console.log(project);
-    document.dispatchEvent(new CustomEvent("projectChanged", {detail: project}));
+    document.dispatchEvent(
+      new CustomEvent("projectChanged", { detail: project })
+    );
     closePopup();
   });
   newProjectForm.appendChild(submitButton);

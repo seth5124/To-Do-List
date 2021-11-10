@@ -4,11 +4,10 @@ import pencilSVG from "../assets/pencil.svg";
 
 /**
  * Creates a task card for the given task
- * @param {Task} Tas 
+ * @param {Task} Task
  * @returns Div containing a task card popup containing the task details
  */
 export function TaskCard(task) {
-  
   //Creates task card
   let taskCard = document.createElement("div");
 
@@ -19,14 +18,18 @@ export function TaskCard(task) {
 
   //Not implemented fully
   //Will allow editing of the task title
-  taskTitle.addEventListener('dblclick',()=>{
-    editElement(taskTitle,()=>{
-      taskTitle.innerHTML=`${task.name}`
-      document.dispatchEvent(new CustomEvent('tasksUpdated'));
-    },(newName)=>{
-      task.name = newName;
-    });
-  })
+  taskTitle.addEventListener("dblclick", () => {
+    editElement(
+      taskTitle,
+      () => {
+        taskTitle.innerHTML = `${task.name}`;
+        document.dispatchEvent(new CustomEvent("tasksUpdated"));
+      },
+      (newName) => {
+        task.name = newName;
+      }
+    );
+  });
   taskTitle.innerHTML = `${task.name}`;
 
   /**
@@ -35,16 +38,20 @@ export function TaskCard(task) {
    */
   let taskDueDate = document.createElement("h1");
   taskDueDate.classList.add("taskHeaderElement");
-  taskDueDate.innerHTML = format(task.dueDate, 'M/d');
-  taskDueDate.addEventListener('dblclick', ()=>{
-    editElement(taskDueDate, ()=>{
-      console.log(task.dueDate);
-      taskDueDate.innerHTML = format(task.dueDate, 'M/d');
-      document.dispatchEvent(new CustomEvent('tasksUpdated'));
-    },(newDate)=>{
-      task.dueDate = parse(newDate, 'yyyy-MM-dd', new Date());
-    },'date')
-  })
+  taskDueDate.innerHTML = format(task.dueDate, "M/d");
+  taskDueDate.addEventListener("dblclick", () => {
+    editElement(
+      taskDueDate,
+      () => {
+        taskDueDate.innerHTML = format(task.dueDate, "M/d");
+        document.dispatchEvent(new CustomEvent("tasksUpdated"));
+      },
+      (newDate) => {
+        task.dueDate = parse(newDate, "yyyy-MM-dd", new Date());
+      },
+      "date"
+    );
+  });
   taskHeader.appendChild(taskTitle);
   taskHeader.append(
     Object.assign(document.createElement("h1"), {
@@ -58,14 +65,17 @@ export function TaskCard(task) {
   //P tag for task description
   let taskDescription = document.createElement("p");
   taskDescription.innerHTML = task.description;
-  taskDescription.addEventListener('dblclick',()=>{
-    editElement(taskDescription,()=>{
-      taskDescription.innerHTML = task.description;
-    },
-    (newDescription)=>{
-      task.description = newDescription;
-    })
-  })
+  taskDescription.addEventListener("dblclick", () => {
+    editElement(
+      taskDescription,
+      () => {
+        taskDescription.innerHTML = task.description;
+      },
+      (newDescription) => {
+        task.description = newDescription;
+      }
+    );
+  });
   taskCard.appendChild(taskDescription);
 
   //Container for the notes list and header
@@ -93,7 +103,6 @@ export function TaskCard(task) {
   });
   notesHeader.appendChild(newNoteButton);
 
-  
   notesListContainer.appendChild(notesHeader);
 
   //calls loadNotes and appends the result to the task list
@@ -117,11 +126,10 @@ export function TaskCard(task) {
 
 /**
  *  Returns a ul with li elements for each note the task has
- * @param {Task} Task object containing notes 
+ * @param {Task} Task object containing notes
  * @returns Div containing li objects for each note
  */
 function loadNotes(task) {
-  
   //Pulls notes from task objects
   let notes = task.notes;
 
@@ -132,22 +140,25 @@ function loadNotes(task) {
 
   //Iterating over notes list
   for (let note in notes) {
-    let taskNoteDiv = document.createElement('li');
+    let taskNoteDiv = document.createElement("li");
     let taskNote = document.createElement("div");
     taskNote.classList.add("taskNote");
     taskNote.innerHTML = notes[note];
-    
+
     //Handles editing notes on double click
-    taskNote.addEventListener("dblclick",() => {
-      editElement(taskNote,()=>{
-        document.getElementById("taskNoteList").replaceWith(loadNotes(task));
-      },
-      (newNote)=>{
-        notes[note] = newNote;
-      })
+    taskNote.addEventListener("dblclick", () => {
+      editElement(
+        taskNote,
+        () => {
+          document.getElementById("taskNoteList").replaceWith(loadNotes(task));
+        },
+        (newNote) => {
+          notes[note] = newNote;
+        }
+      );
     });
 
-    //Delete button for each note     
+    //Delete button for each note
     let deleteTaskButton = document.createElement("button");
     deleteTaskButton.innerHTML = "x";
     deleteTaskButton.addEventListener("click", (e) => {
@@ -158,7 +169,7 @@ function loadNotes(task) {
     });
     taskNoteDiv.appendChild(taskNote);
     taskNoteDiv.appendChild(deleteTaskButton);
-    
+
     taskNoteList.appendChild(taskNoteDiv);
   }
 
@@ -167,15 +178,20 @@ function loadNotes(task) {
 
 /**
  *  Replaces a node with an edit box that will update that node's data and HTML
- * @param {Node} Node Node to be replaced 
- * @param {Function} reloadFunction Function that should reload the data's UI elements 
+ * @param {Node} Node Node to be replaced
+ * @param {Function} reloadFunction Function that should reload the data's UI elements
  * @param {Function} replaceFunction Function that should handle updating the data
  * @param {Type} inputType Type of input that should be generated to handle the data
  */
-function editElement(node, reloadFunction, replaceFunction,inputType = 'text'){
+function editElement(
+  node,
+  reloadFunction,
+  replaceFunction,
+  inputType = "text"
+) {
   let originalNode = node;
   let editBox = document.createElement("input");
-  editBox.setAttribute('type',inputType);
+  editBox.setAttribute("type", inputType);
   node.replaceWith(editBox);
   editBox.value = originalNode.innerHTML;
   editBox.focus();
@@ -190,5 +206,4 @@ function editElement(node, reloadFunction, replaceFunction,inputType = 'text'){
       reloadFunction();
     }
   });
-
 }
