@@ -22,6 +22,7 @@ export function TaskCard(task) {
   taskTitle.addEventListener('dblclick',()=>{
     editElement(taskTitle,()=>{
       taskTitle.innerHTML=`${task.name}`
+      document.dispatchEvent(new CustomEvent('tasksUpdated'));
     },(newName)=>{
       task.name = newName;
     });
@@ -39,6 +40,7 @@ export function TaskCard(task) {
     editElement(taskDueDate, ()=>{
       console.log(task.dueDate);
       taskDueDate.innerHTML = format(task.dueDate, 'M/d');
+      document.dispatchEvent(new CustomEvent('tasksUpdated'));
     },(newDate)=>{
       task.dueDate = parse(newDate, 'yyyy-MM-dd', new Date());
     },'date')
@@ -166,7 +168,7 @@ function loadNotes(task) {
 /**
  *  Replaces a node with an edit box that will update that node's data and HTML
  * @param {Node} Node Node to be replaced 
- * @param {Function} reloadFunction Function that should reload the element
+ * @param {Function} reloadFunction Function that should reload the data's UI elements 
  * @param {Function} replaceFunction Function that should handle updating the data
  * @param {Type} inputType Type of input that should be generated to handle the data
  */

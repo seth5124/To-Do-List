@@ -29,8 +29,9 @@ document.addEventListener("projectChanged", (event) => {
 });
 
 document.addEventListener("tasksUpdated", (event) => {
-  let project = event.detail;
-  activeProject = project;
+  
+  let project = event.detail ? event.detail : activeProject;
+  
   updateDateCards(project);
   updateSidebar();
 });
