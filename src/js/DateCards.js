@@ -2,7 +2,7 @@ import { NewTaskForm } from "./NewTaskForm.js";
 import { removeTaskFromProject } from "./DB.js";
 import { TaskCard } from "./TaskCard.js";
 import { showPopup } from "./popup.js";
-import { isToday, isTomorrow } from "./DateUtilities.js";
+import {format,isToday,isTomorrow} from "date-fns";
 
 import plusSVG from "../assets/plus.svg"
 
@@ -17,6 +17,8 @@ export function DateCards(project) {
    */
   for (let date in dateEntries) {
     date = new Date(date); //Converts to date object for easy reference
+
+
 
     //Creates Task Card element
     let dateCard = document.createElement("div");
@@ -37,14 +39,14 @@ export function DateCards(project) {
     dateCardList.classList.add("dateCardList");
 
     //Replaces the task card's title with "Today" or "Tomorrow" if appropriate
-    //Otherwise the card is titled with its date (MM/DD)
+    //Otherwise the card is titled with its date (M/d)
     if (isToday(date)) {
       dateCardTitle.innerHTML = "Today";
     } else if (isTomorrow(date)) {
       dateCardTitle.innerHTML = "Tomorrow";
     } else {
-      dateCardTitle.innerHTML = `${date.getMonth() + 1}/${date.getDate() + 1}`;
-      //dateCardTitle.innerHTML = format('MM/DD');
+
+      dateCardTitle.innerHTML = format(date, 'M/d');
     }
 
     /**
@@ -63,7 +65,6 @@ export function DateCards(project) {
       
       deleteButton.addEventListener("click", function (e) {
         e.stopPropagation();
-        console.log(e);
 
         removeTaskFromProject(project, currentTask);
         document.dispatchEvent(

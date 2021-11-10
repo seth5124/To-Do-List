@@ -1,4 +1,5 @@
 import { closePopup } from "./popup.js";
+import { format, parse } from "date-fns";
 import pencilSVG from "../assets/pencil.svg";
 
 /**
@@ -7,10 +8,7 @@ import pencilSVG from "../assets/pencil.svg";
  * @returns Div containing a task card popup containing the task details
  */
 export function TaskCard(task) {
-  let taskDueDateFormatted = `${task.dueDate.getMonth()}/${
-    task.dueDate.getDate() + 1
-  }`;
-
+  
   //Creates task card
   let taskCard = document.createElement("div");
 
@@ -36,13 +34,13 @@ export function TaskCard(task) {
    */
   let taskDueDate = document.createElement("h1");
   taskDueDate.classList.add("taskHeaderElement");
-  taskDueDate.innerHTML = `${task.dueDateFormatted()}`;
+  taskDueDate.innerHTML = format(task.dueDate, 'M/d');
   taskDueDate.addEventListener('dblclick', ()=>{
     editElement(taskDueDate, ()=>{
       console.log(task.dueDate);
-      taskDueDate.innerHTML = task.dueDateFormatted();
+      taskDueDate.innerHTML = format(task.dueDate, 'M/d');
     },(newDate)=>{
-      task.dueDate = new Date(newDate);
+      task.dueDate = parse(newDate, 'yyyy-MM-dd', new Date());
     },'date')
   })
   taskHeader.appendChild(taskTitle);
@@ -182,6 +180,7 @@ function editElement(node, reloadFunction, replaceFunction,inputType = 'text'){
   editBox.addEventListener("keyup", (e) => {
     if (e.key == "Enter") {
       let newValue = editBox.value;
+      console.log(newValue);
       originalNode.innerHTML = newValue;
       editBox.blur();
       editBox.replaceWith(originalNode);

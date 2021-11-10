@@ -25,30 +25,11 @@ export class Task {
   get dueDate() {
     return this._dueDate;
   }
-  dueDateFormatted(){
-    return `${this.dueDate.getMonth() + 1}/${
-      this.dueDate.getDate() + 1
-    }`
-  }
+
   set dueDate(date) {
     this._dueDate = date;
   }
-  isDueToday() {
-    let today = new Date();
-    return (
-      this.dueDate.getDate() == today.getDate() &&
-      this.dueDate.getMonth() == today.getMonth() &&
-      this.dueDate.getFullYear() == today.getFullYear()
-    );
-  }
-  isDueTomorrow() {
-    let today = new Date();
-    return (
-      this.dueDate.getDate() == today.getDate() + 1 &&
-      this.dueDate.getMonth() == today.getMonth() &&
-      this.dueDate.getFullYear() == today.getFullYear()
-    );
-  }
+
   get tags() {
     return this._tags;
   }

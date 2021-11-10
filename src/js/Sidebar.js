@@ -4,7 +4,7 @@ import { DateCards } from "./DateCards.js";
 import { NewProjectForm } from "./NewProjectForm.js";
 import { getProjects } from "./DB.js";
 import { showPopup } from "./popup.js";
-import { isToday, isTomorrow } from "./DateUtilities.js";
+import { isToday,isTomorrow } from "date-fns";
 
 
 export function Sidebar() {

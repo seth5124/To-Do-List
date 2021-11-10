@@ -1,6 +1,7 @@
 import { addTaskToProject } from "./DB.js";
 import { closePopup } from "./popup.js";
 import { Task } from "./task.js";
+import { parse } from "date-fns";
 
 export function NewTaskForm(project) {
   //Div element housing the form elemnets
@@ -35,7 +36,7 @@ export function NewTaskForm(project) {
     //Creates task object from input values
     let name = nameInput.value;
     let description = descriptionInput.value;
-    let dueDate = new Date(dateInput.value);
+    let dueDate = parse(dateInput.value, 'yyyy-MM-dd',new Date());
     let task = new Task(name, description, dueDate);
 
     //Adds task to current project
