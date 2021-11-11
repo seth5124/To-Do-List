@@ -1,5 +1,6 @@
 import { closePopup } from "./popup.js";
 import { format, parse } from "date-fns";
+import { editElement } from "./EditElement.js";
 import pencilSVG from "../assets/pencil.svg";
 
 /**
@@ -183,27 +184,27 @@ function loadNotes(task) {
  * @param {Function} replaceFunction Function that should handle updating the data
  * @param {Type} inputType Type of input that should be generated to handle the data
  */
-function editElement(
-  node,
-  reloadFunction,
-  replaceFunction,
-  inputType = "text"
-) {
-  let originalNode = node;
-  let editBox = document.createElement("input");
-  editBox.setAttribute("type", inputType);
-  node.replaceWith(editBox);
-  editBox.value = originalNode.innerHTML;
-  editBox.focus();
-  editBox.addEventListener("keyup", (e) => {
-    if (e.key == "Enter") {
-      let newValue = editBox.value;
-      console.log(newValue);
-      originalNode.innerHTML = newValue;
-      editBox.blur();
-      editBox.replaceWith(originalNode);
-      replaceFunction(newValue);
-      reloadFunction();
-    }
-  });
-}
+// function editElement(
+//   node,
+//   reloadFunction,
+//   replaceFunction,
+//   inputType = "text"
+// ) {
+//   let originalNode = node;
+//   let editBox = document.createElement("input");
+//   editBox.setAttribute("type", inputType);
+//   node.replaceWith(editBox);
+//   editBox.value = originalNode.innerHTML;
+//   editBox.focus();
+//   editBox.addEventListener("keyup", (e) => {
+//     if (e.key == "Enter") {
+//       let newValue = editBox.value;
+//       console.log(newValue);
+//       originalNode.innerHTML = newValue;
+//       editBox.blur();
+//       editBox.replaceWith(originalNode);
+//       replaceFunction(newValue);
+//       reloadFunction();
+//     }
+//   });
+// }
