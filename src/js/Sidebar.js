@@ -11,14 +11,15 @@ export function Sidebar() {
   sidebar.id = "sideBar";
   let projectList = document.createElement("ul");
   projectList.id = "projectList";
-  sidebar.appendChild(projectList);
-
+  
   /*Pulls each exisitng project and adds an 
       entry div to the sidebar with its name*/
   let projects = getProjects();
   for (let project in projects) {
-    sidebar.appendChild(ProjectEntry(projects[project]));
+    projectList.appendChild(ProjectEntry(projects[project]));
+
   }
+  sidebar.appendChild(projectList);
   sidebar.appendChild(NewProjectButton());
   return sidebar;
 }
@@ -46,10 +47,10 @@ function NewProjectButton() {
 function ProjectEntry(project) {
   let projectEntry = document.createElement("div");
   projectEntry.classList.add("projectEntry");
-  projectEntry.project = project;
+  projectEntry.setAttribute('project', project.name);
   projectEntry.addEventListener("click", () => {
     document.dispatchEvent(
-      new CustomEvent("projectChanged", { detail: projectEntry.project })
+      new CustomEvent("projectChanged", { detail: project })
     );
   });
 
@@ -66,3 +67,4 @@ function ProjectEntry(project) {
 
   return projectEntry;
 }
+

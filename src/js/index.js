@@ -14,19 +14,22 @@ let content = document.getElementById("content");
 content.appendChild(TopBar(activeProject));
 content.appendChild(Sidebar(getProjects()));
 content.appendChild(DateCards(activeProject));
+makeProjectEntryActive(activeProject);
 
 document.addEventListener("projectChanged", (event) => {
   let project = event.detail;
   activeProject = project;
   updateTopBar();
   updateSidebar();
-  updateDateCards(project);
+  updateDateCards(activeProject);
+  makeProjectEntryActive(activeProject);
+  
+
 });
 
 document.addEventListener("tasksUpdated", (event) => {
   let project = event.detail ? event.detail : activeProject;
   updateDateCards(project);
-  updateSidebar();
 });
 
 function updateSidebar() {
@@ -46,4 +49,18 @@ function updateDateCards(project) {
 function updateTopBar() {
   let topBar = document.getElementById("topBar");
   topBar.replaceWith(TopBar(activeProject));
+}
+
+function makeProjectEntryActive(project){
+  let projectEntries = Array.from(document.getElementById('projectList').children);
+  for(let projectEntry in projectEntries){
+    let entry = projectEntries[projectEntry];
+    if(entry.getAttribute('project') == project.name){
+      entry.classList.add('active');
+    }
+    else{
+      entry.classList.remove('active');
+    }
+  }
+
 }
