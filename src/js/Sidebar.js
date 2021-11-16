@@ -2,8 +2,9 @@
 
 import { DateCards } from "./DateCards.js";
 import { NewProjectForm } from "./NewProjectForm.js";
-import { getProjects } from "./DB.js";
+import { getProjects,getHomeProject } from "./DB.js";
 import { showPopup } from "./popup.js";
+import homeIcon from '../assets/home.svg';
 
 export function Sidebar() {
   //Creates Sidebar div
@@ -11,6 +12,9 @@ export function Sidebar() {
   sidebar.id = "sideBar";
   let projectList = document.createElement("ul");
   projectList.id = "projectList";
+
+  projectList.appendChild(ProjectEntry(getHomeProject()));
+
   
   /*Pulls each exisitng project and adds an 
       entry div to the sidebar with its name*/
@@ -55,12 +59,20 @@ function ProjectEntry(project) {
   });
 
   //Project title div in side bar
+
   let projectHeader = document.createElement("div");
   projectHeader.classList.add("projectHeader");
+  let projectHeaderName;
+  if(project.name == getHomeProject().name){
+    projectHeaderName = document.createElement('img');
+    projectHeaderName.classList.add('homeIcon');
+    projectHeaderName.src = homeIcon;
+  }
+  else{
+    projectHeaderName = document.createElement("h3");
+    projectHeaderName.innerHTML = project.name;
+  }
 
-  //h1 element containing the text of the project title
-  let projectHeaderName = document.createElement("h3");
-  projectHeaderName.innerHTML = project.name;
 
   projectHeader.appendChild(projectHeaderName);
   projectEntry.appendChild(projectHeader);

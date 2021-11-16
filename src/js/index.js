@@ -1,14 +1,13 @@
 import { Project } from "./project.js";
 import { Sidebar } from "./Sidebar.js";
-import { addProject, getProjects } from "./DB.js";
+import { addProject, getProjects,getHomeProject} from "./DB.js";
 import { DateCards } from "./DateCards.js";
 import { TopBar } from "./TopBar.js";
 import "../css/styles.css";
 
-let mainProject = new Project("Main Project");
-addProject(mainProject);
 
-let activeProject = mainProject;
+
+let activeProject = getHomeProject();
 
 let content = document.getElementById("content");
 content.appendChild(TopBar(activeProject));
