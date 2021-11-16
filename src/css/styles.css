@@ -66,6 +66,7 @@ content {
     justify-content: center;
     align-items: center;
 }
+
 .dateCardTitle {
     position: relative;
     top: -8px;
@@ -218,5 +219,10 @@ h3 {
     padding: 0;
 }
 #topBar > h1 {
+    padding-left: 1rem;
+    display: inline;
     margin: 0;
+}
+#topBar > button{
+    margin-left: 1rem;
 }

@@ -20,6 +20,9 @@ export function getHomeProject(){
   return homeProject;
 }
 
+export function deleteProject(project){
+  delete projects[project.name];
+}
 export function addTaskToProject(project, task) {
   project.addTask(task);
 }
