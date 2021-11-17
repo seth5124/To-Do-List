@@ -81,6 +81,7 @@ content {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: center;
     height: 100%;
     margin: 0;
     padding-left: 0;
@@ -110,6 +111,16 @@ content {
 }
 .dateCardEntry:hover {
     background-color: rgb(119, 30, 30);
+}
+.newTaskButton{
+    width: 2rem;
+    height: 3rem;
+    opacity: 50%;
+    align-self: flex-end;
+    padding: 1rem;
+}
+.newTaskButton:hover{
+    opacity: 100%;
 }
 .plusIcon {
     width: 50%;

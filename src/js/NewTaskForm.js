@@ -1,9 +1,9 @@
 import { addTaskToProject } from "./DB.js";
 import { closePopup } from "./popup.js";
 import { Task } from "./task.js";
-import { parse } from "date-fns";
+import { parse, format } from "date-fns";
 
-export function NewTaskForm(project) {
+export function NewTaskForm(project, date = undefined) {
   //Div element housing the form elemnets
   let newTaskForm = document.createElement("div");
   newTaskForm.id = "popup";
@@ -26,6 +26,9 @@ export function NewTaskForm(project) {
   //Due date element
   let dateInput = document.createElement("input");
   dateInput.type = "date";
+  if(date){
+    dateInput.value = format(new Date(date), 'yyyy-MM-dd');
+  }
   newTaskForm.appendChild(dateInput);
 
   //Submit Button

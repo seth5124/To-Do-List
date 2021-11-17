@@ -97,6 +97,14 @@ export function DateCards(project) {
         showPopup(TaskCard(currentTask));
       });
     }
+    let newTaskButton = document.createElement('img');
+    newTaskButton.src = plusSVG;
+    newTaskButton.classList.add('newTaskButton');
+    newTaskButton.addEventListener('click',()=>{
+      showPopup(NewTaskForm(project,date));
+    })
+    dateCardList.appendChild(newTaskButton);
+    
     dateCardContent.appendChild(dateCardList); //Appends task list to the dateCardContent div
     dateCards.appendChild(dateCard); //Appends the entire card to the date card list
   }
