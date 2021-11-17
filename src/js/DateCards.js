@@ -71,10 +71,21 @@ export function DateCards(project) {
       let name = currentTask.name;
       let nameLabel = document.createElement("h3");
       nameLabel.innerHTML = name;
-      currentTask.isDone ? nameLabel.classList.toggle('checkedOff'): {};
+
 
       //Creates img element for the "is done "checkbox
-      let checkBox = createCheckMark();
+      let checkBox = document.createElement('input');
+      checkBox.type = 'checkbox';
+      checkBox.classList.add('taskCheckBox');
+
+      if(currentTask.isDone){
+        nameLabel.classList.toggle('checkedOff');
+        checkBox.setAttribute('checked','checked');
+      }
+
+      
+      
+      //let checkBox = createCheckMark();
       checkBox.classList.add("check");
       let checkImgSrc = "../assets/check.svg";
       checkBox.src = checkImgSrc;
