@@ -104,6 +104,10 @@ content {
     height: 30%;
     width: 100%;
 }
+.checkedOff{
+    text-decoration: line-through;
+    color:rgb(100, 100, 100)
+}
 .dateCardEntry:hover {
     background-color: rgb(119, 30, 30);
 }

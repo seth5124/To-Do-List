@@ -16,6 +16,7 @@ export function TaskCard(task) {
   let taskHeader = document.createElement("div");
   let taskTitle = document.createElement("h1");
   taskTitle.classList.add("taskHeaderElement");
+  task.isDone ? taskTitle.classList.toggle('checkedOff'): {};
 
   //Not implemented fully
   //Will allow editing of the task title

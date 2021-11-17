@@ -71,12 +71,18 @@ export function DateCards(project) {
       let name = currentTask.name;
       let nameLabel = document.createElement("h3");
       nameLabel.innerHTML = name;
+      currentTask.isDone ? nameLabel.classList.toggle('checkedOff'): {};
 
       //Creates img element for the "is done "checkbox
       let checkBox = createCheckMark();
       checkBox.classList.add("check");
       let checkImgSrc = "../assets/check.svg";
       checkBox.src = checkImgSrc;
+      checkBox.addEventListener('click',(event)=>{
+        event.stopPropagation();
+        currentTask.toggleDone();
+        nameLabel.classList.toggle('checkedOff');
+      })
 
       //Appends task name to the li
       dateCardEntry.appendChild(nameLabel);
