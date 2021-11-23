@@ -48,7 +48,7 @@ export function TaskCard(task) {
     });
 
     let taskDescription = document.createElement("p");
-    taskDescription.innerHTML = task.description;
+    taskDescription.innerHTML = task.description ? task.description : 'Add a description';
     taskDescription.addEventListener("dblclick", () => {
         editElement(
             taskDescription,
