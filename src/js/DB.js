@@ -57,5 +57,5 @@ export function addTaskToProject(project, task) {
  * @param {Task} task - task to remove
  */
 export function removeTaskFromProject(project, task) {
-    project.removeTask(project.getTaskIndex(task));
+    project.removeTask(task);
 }

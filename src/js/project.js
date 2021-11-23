@@ -55,19 +55,11 @@ export class Project {
    * Removes task given the task's index
    * @param {Index} taskIndex
    */
-  removeTask(taskIndex) {
+  removeTask(task) {
+    let taskIndex = this.tasks.indexOf(task);
     this.tasks.splice(taskIndex, 1);
   }
-
-  /**
-   * 
-   * @param {Task} task 
-   * @returns {Index} Index of task
-   */
-  getTaskIndex(task) {
-    return this.tasks.indexOf(task);
-  }
-
+  
   get name() {
     return this._name;
   }
