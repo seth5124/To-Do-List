@@ -14,7 +14,6 @@ import { parse, format } from "date-fns";
 export function NewTaskForm(project, date = undefined) {
 
   let newTaskForm = document.createElement("div");
-  newTaskForm.id = "popup";
 
   let formHeader = document.createElement("h1");
   formHeader.innerHTML = `Add New Task in ${project.name}`;
