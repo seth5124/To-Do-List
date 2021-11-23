@@ -9,7 +9,7 @@ export function showPopup(popup) {
     let body = document.getElementsByTagName("BODY")[0];
     body.insertBefore(popup, content);
 
-    content.classList.toggle("blur");
+    content.classList.add("blur");
 
     if (popup.getElementsByTagName("input")[0]) {
         popup.getElementsByTagName("input")[0].focus();
@@ -21,5 +21,5 @@ export function showPopup(popup) {
 export function closePopup() {
   
     document.getElementById("popup").remove();
-    document.getElementById("content").classList.toggle("blur");
+    document.getElementById("content").classList.remove("blur");
 }
