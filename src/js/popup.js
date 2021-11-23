@@ -1,23 +1,25 @@
+/**
+ * Takes in a div to show as a popup
+ * @param {HTMLDivElement} popup - Div to show as a popup
+ */
 export function showPopup(popup) {
-  popup.id = "popup"; //Currently only supports one popup at a time
+    popup.id = "popup";
 
-  //Grabs content and bosy elements to append the popup before everything else
-  let content = document.getElementById("content");
-  let body = document.getElementsByTagName("BODY")[0];
-  body.insertBefore(popup, content);
+    let content = document.getElementById("content");
+    let body = document.getElementsByTagName("BODY")[0];
+    body.insertBefore(popup, content);
 
-  //Blurs background
-  content.classList.toggle("blur");
+    content.classList.toggle("blur");
 
-  //focuses first input element
-  if (popup.getElementsByTagName("input")[0]) {
-    popup.getElementsByTagName("input")[0].focus();
-  }
+    if (popup.getElementsByTagName("input")[0]) {
+        popup.getElementsByTagName("input")[0].focus();
+    }
 }
-
+/**
+ * Destroys element with ID of 'popup' and unblurs background
+ */
 export function closePopup() {
-  //Destroys popup element and unblurs the back ground
-  //TODO: set all other elements as non-selectable
-  document.getElementById("popup").remove();
-  document.getElementById("content").classList.toggle("blur");
+  
+    document.getElementById("popup").remove();
+    document.getElementById("content").classList.toggle("blur");
 }

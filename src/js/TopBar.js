@@ -3,6 +3,11 @@ import { getHomeProject } from "./DB.js";
 import { DeleteProjectForm } from "./DeleteProjectForm.js";
 import { showPopup } from "./popup.js";
 
+/**
+ * Render the top bar with the active project name and option to delete the project
+ * @param {Project} project - Project from whihc to pull info
+ * @returns {HTMLDivElement} HTMLDivElement - Top bar element
+ */
 export function TopBar(project) {
   let topBar = document.createElement("div");
   topBar.id = "topBar";
@@ -20,6 +25,7 @@ export function TopBar(project) {
         project.name = newName;
       })
     })
+    
     let deleteProjectButton = document.createElement('button');
     deleteProjectButton.innerHTML = 'X';
     deleteProjectButton.classList.add('deleteProjectButton');

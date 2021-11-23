@@ -1,3 +1,7 @@
+/**
+ * Projects hold and arrange tasks and their due dates
+ * @param {String} name - Name of the project
+ */
 export class Project {
   constructor(name) {
     this.name = name;
@@ -8,9 +12,13 @@ export class Project {
     return this._tasks;
   }
 
+  set tasks(tasks) {
+    this._tasks = tasks;
+  }
+
   /**
    * returns all tasks in its project arranged in individual objects by date
-   * @returns An object containing individual objects containing each date's tasks
+   * @returns {Object} Object - containing entries for each date with tasks
    */
   tasksByDate() {
     if (this.tasks == []) return {};
@@ -36,11 +44,6 @@ export class Project {
     });
     return sortedByDate;
   }
-
-  set tasks(tasks) {
-    this._tasks = tasks;
-  }
-
   /**
    * Adds task to project
    * @param {Task} task
@@ -56,6 +59,11 @@ export class Project {
     this.tasks.splice(taskIndex, 1);
   }
 
+  /**
+   * 
+   * @param {Task} task 
+   * @returns {Index} Index of task
+   */
   getTaskIndex(task) {
     return this.tasks.indexOf(task);
   }

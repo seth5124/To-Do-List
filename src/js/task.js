@@ -1,4 +1,16 @@
+
+/**
+ * tasks hold a name, description and notes as well as
+ * a priority from 5 to 1 and a list of tags
+ */
 export class Task {
+ 
+  /**
+   * 
+   * @param {String} name - Name of the task 
+   * @param {String} description - Description of the task
+   * @param {Date} dueDate - Date the task is due
+   */
   constructor(name, description, dueDate) {
     this.name = name;
     this.description = description;

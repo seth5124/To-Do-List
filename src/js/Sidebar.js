@@ -1,23 +1,24 @@
-//TODO: Add click away functionality to clear submenu
-
-import { DateCards } from "./DateCards.js";
 import { NewProjectForm } from "./NewProjectForm.js";
 import { getProjects,getHomeProject } from "./DB.js";
 import { showPopup } from "./popup.js";
 import homeIcon from '../assets/home.svg';
 
+/**
+ * Renders sidebar containing entries for each project
+ * @returns {HTMLDivElement} Sidebar Div element
+ */
 export function Sidebar() {
-  //Creates Sidebar div
-  let sidebar = document.createElement("div");
-  sidebar.id = "sideBar";
-  let projectList = document.createElement("ul");
-  projectList.id = "projectList";
 
+  
+  let sidebar = Object.assign(document.createElement("div"),{
+    id: 'sideBar'
+  })
+  let projectList = Object.assign(document.createElement("ul"),{
+    id: 'projectList',
+  })
   projectList.appendChild(ProjectEntry(getHomeProject()));
 
   
-  /*Pulls each exisitng project and adds an 
-      entry div to the sidebar with its name*/
   let projects = getProjects();
   for (let project in projects) {
     projectList.appendChild(ProjectEntry(projects[project]));
@@ -28,13 +29,17 @@ export function Sidebar() {
   return sidebar;
 }
 
-/**Creates a projectEntry div for adding new projects
- * */
+/**
+ * Renders the 'New project button' to append at the botton of the sidebar
+ * @returns {HTMLDivElement} Div element
+ */
 function NewProjectButton() {
-  let button = document.createElement("div");
-  button.classList.add("projectEntry");
-  let buttonText = document.createElement("h3");
-  buttonText.innerHTML = "+";
+  let button = Object.assign(document.createElement('div'),{
+    classList: 'projectEntry',
+  })
+  let buttonText = Object.assign(document.createElement('h3'),{
+    innerHTML: '+',
+  })
   button.appendChild(buttonText);
   button.addEventListener("click", () => {
     showPopup(NewProjectForm());
@@ -44,35 +49,37 @@ function NewProjectButton() {
 }
 
 /**
- *
+ * Renders a single project entry for the sidebar
  * @param {Project} project
  * @returns {HTMLDivElement} Div containing the project sidebar entry
  */
 function ProjectEntry(project) {
-  let projectEntry = document.createElement("div");
-  projectEntry.classList.add("projectEntry");
-  projectEntry.setAttribute('project', project.name);
+  let projectEntry = Object.assign(document.createElement('div'),{
+    classList: 'projectEntry',
+    project: project.name,
+  })
   projectEntry.addEventListener("click", () => {
     document.dispatchEvent(
       new CustomEvent("projectChanged", { detail: project })
     );
   });
 
-  //Project title div in side bar
-
-  let projectHeader = document.createElement("div");
-  projectHeader.classList.add("projectHeader");
+  let projectHeader = Object.assign(document.createElement('div'),{
+    classList: 'projectHeader',
+  })
   let projectHeaderName;
+  
   if(project.name == getHomeProject().name){
-    projectHeaderName = document.createElement('img');
-    projectHeaderName.classList.add('homeIcon');
-    projectHeaderName.src = homeIcon;
+    projectHeaderName = Object.assign(document.createElement('img'),{
+      src: homeIcon,
+      classList: 'homeIcon',
+    })
   }
   else{
-    projectHeaderName = document.createElement("h3");
-    projectHeaderName.innerHTML = project.name;
+    projectHeaderName = Object.assign(document.createElement('h3'),{
+      innerHTML: project.name,
+    })
   }
-
 
   projectHeader.appendChild(projectHeaderName);
   projectEntry.appendChild(projectHeader);

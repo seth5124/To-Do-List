@@ -1,29 +1,33 @@
 import { addTaskToProject } from "./DB.js";
 import { closePopup } from "./popup.js";
 import { Task } from "./task.js";
+import { Project } from "./project.js";
 import { parse, format } from "date-fns";
 
+
+/**
+ * Renders form to add a new task to a given project
+ * @param {Project} project - Project to add the task to
+ * @param {Date} date - Task's due date if this is already defined. Defaults to undefined
+ * @returns {HTMLDivElement} Div containing the form
+ */
 export function NewTaskForm(project, date = undefined) {
-  //Div element housing the form elemnets
+
   let newTaskForm = document.createElement("div");
   newTaskForm.id = "popup";
 
-  //Form header in an h1 tag
   let formHeader = document.createElement("h1");
   formHeader.innerHTML = `Add New Task in ${project.name}`;
   newTaskForm.appendChild(formHeader);
 
-  //Name Input
   let nameInput = document.createElement("input");
   nameInput.placeholder = "Task Name";
   newTaskForm.appendChild(nameInput);
 
-  //Description Input
   let descriptionInput = document.createElement("input");
   descriptionInput.placeholder = "Description...";
   newTaskForm.appendChild(descriptionInput);
 
-  //Due date element
   let dateInput = document.createElement("input");
   dateInput.type = "date";
   if(date){
@@ -31,21 +35,17 @@ export function NewTaskForm(project, date = undefined) {
   }
   newTaskForm.appendChild(dateInput);
 
-  //Submit Button
   let submitButton = document.createElement("button");
   submitButton.type = "submit";
   submitButton.innerHTML = "Add";
   submitButton.addEventListener("click", () => {
-    //Creates task object from input values
     let name = nameInput.value;
     let description = descriptionInput.value;
     let dueDate = parse(dateInput.value, "yyyy-MM-dd", new Date());
     let task = new Task(name, description, dueDate);
 
-    //Adds task to current project
     addTaskToProject(project, task);
 
-    //Triggers the task card list to re-render
     document.dispatchEvent(
       new CustomEvent("tasksUpdated", { detail: project })
     );
@@ -54,7 +54,6 @@ export function NewTaskForm(project, date = undefined) {
   });
   newTaskForm.appendChild(submitButton);
 
-  //Close button
   let closeButton = document.createElement("button");
   closeButton.classList.add("closeFormButton");
   closeButton.innerHTML = "X";
