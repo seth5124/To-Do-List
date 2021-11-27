@@ -1,3 +1,5 @@
+
+
 /**
  * Takes in a div to show as a popup
  * @param {HTMLDivElement} popup - Div to show as a popup
@@ -19,7 +21,7 @@ export function showPopup(popup) {
  * Destroys element with ID of 'popup' and unblurs background
  */
 export function closePopup() {
-  
+
     document.getElementById("popup").remove();
     document.getElementById("content").classList.remove("blur");
 }

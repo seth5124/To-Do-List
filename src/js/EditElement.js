@@ -20,6 +20,10 @@ export function editElement(
     editBox.addEventListener("keyup", (e) => {
         if (e.key == "Enter") {
             let newValue = editBox.value;
+            if(newValue.length < 1){
+                alert("Value cannot be blank!");
+                return;
+            }
             originalNode.innerHTML = newValue;
             editBox.blur();
             editBox.replaceWith(originalNode);

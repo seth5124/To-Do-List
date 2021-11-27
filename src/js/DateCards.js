@@ -2,7 +2,7 @@ import { NewTaskForm } from "./NewTaskForm.js";
 import { removeTaskFromProject } from "./DB.js";
 import { TaskCard } from "./TaskCard.js";
 import { showPopup } from "./popup.js";
-import { format, isToday, isTomorrow } from "date-fns";
+import { format, isToday, isTomorrow, isThisYear} from "date-fns";
 import { Project } from "./project.js";
 import plusSVG from "../assets/plus.svg";
 
@@ -17,6 +17,7 @@ export function DateCards(project) {
     let dateCards = document.createElement("div");
     dateCards.id = "DateCards";
 
+    console.log(dateEntries);
     for (let date in dateEntries) {
         date = new Date(date);
 
@@ -40,6 +41,8 @@ export function DateCards(project) {
             dateCardTitle.innerHTML = "Today";
         } else if (isTomorrow(date)) {
             dateCardTitle.innerHTML = "Tomorrow";
+        }else if(!isThisYear(date)){
+            dateCardTitle.innerHTML = format(date, "M/d/yy");
         } else {
             dateCardTitle.innerHTML = format(date, "M/d");
         }
