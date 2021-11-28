@@ -18,6 +18,7 @@ export function TopBar(project) {
 
   let deleteProjectButton;
   if(project.name != getHomeProject().name){
+    topBarTitle.classList.add('editable');
     topBarTitle.addEventListener('dblclick', () =>{
       editElement(topBarTitle, ()=>{
         document.dispatchEvent(new CustomEvent('projectChanged',{detail: project}));

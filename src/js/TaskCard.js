@@ -15,6 +15,7 @@ export function TaskCard(task) {
 
     let taskTitle = document.createElement("h1");
     taskTitle.classList.add("taskHeaderElement");
+    taskTitle.classList.add("editable");
     task.isDone ? taskTitle.classList.toggle("checkedOff") : {};
     taskTitle.addEventListener("dblclick", () => {
         editElement(
@@ -32,6 +33,7 @@ export function TaskCard(task) {
 
     let taskDueDate = document.createElement("h1");
     taskDueDate.classList.add("taskHeaderElement");
+    taskDueDate.classList.add("editable");
     taskDueDate.innerHTML = format(task.dueDate, "M/d");
     taskDueDate.addEventListener("dblclick", () => {
         editElement(
@@ -48,6 +50,7 @@ export function TaskCard(task) {
     });
 
     let taskDescription = document.createElement("p");
+    taskDescription.classList.add("editable");
     taskDescription.innerHTML = task.description ? task.description : 'Add a description';
     taskDescription.addEventListener("dblclick", () => {
         editElement(
@@ -131,6 +134,7 @@ function loadNotes(task) {
         let taskNoteDiv = document.createElement("li");
         let taskNote = document.createElement("div");
         taskNote.classList.add("taskNote");
+        taskNote.classList.add("editable");
         taskNote.innerHTML = notes[note];
 
         taskNote.addEventListener("dblclick", () => {
