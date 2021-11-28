@@ -17,7 +17,6 @@ export function DateCards(project) {
     let dateCards = document.createElement("div");
     dateCards.id = "DateCards";
 
-    console.log(dateEntries);
     for (let date in dateEntries) {
         date = new Date(date);
 

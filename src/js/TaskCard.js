@@ -156,7 +156,6 @@ function loadNotes(task) {
         deleteTaskButton.addEventListener("click", (e) => {
             e.stopPropagation();
             task.removeNote(notes[note]);
-            console.log(task.notes);
             document
                 .getElementById("taskNoteList")
                 .replaceWith(loadNotes(task));
