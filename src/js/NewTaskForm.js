@@ -5,6 +5,7 @@ import { Project } from "./project.js";
 import { parse, format, isValid, differenceInYears} from "date-fns";
 
 
+
 /**
  * Renders form to add a new task to a given project
  * @param {Project} project - Project to add the task to
@@ -27,6 +28,20 @@ export function NewTaskForm(project, date = undefined) {
   descriptionInput.placeholder = "Description...";
   newTaskForm.appendChild(descriptionInput);
 
+  let priorityInput = document.createElement('select');
+  priorityInput.placeholder = 'Priority';
+  priorityInput.appendChild(Object.assign(document.createElement('option'),{
+    innerHTML: "Priority",
+    value: "Priority"
+  }))
+  for(let i = 1; i <=5; i++){
+    let option = document.createElement('option');
+    option.value = i;
+    option.innerHTML = i;
+    priorityInput.appendChild(option);
+  }
+  newTaskForm.appendChild(priorityInput);
+
   let dateInput = document.createElement("input");
   dateInput.type = "date";
   if(date){
@@ -41,6 +56,7 @@ export function NewTaskForm(project, date = undefined) {
     let name = nameInput.value;
     let description = descriptionInput.value;
     let dueDate = dateInput.value;
+    let priority = priorityInput.value;
     
     if(!isValidDate(dueDate)){
       alert("Invalid date");
@@ -49,8 +65,11 @@ export function NewTaskForm(project, date = undefined) {
     else{
       dueDate = parse(dueDate, "yyyy-MM-dd", new Date());
     }
-    console.log(`Adding task with due date of: ${dueDate}`);
-    let task = new Task(name, description, dueDate);
+    if(priority == 'Priority'){
+      alert("Please select a priority");
+      return;
+    }
+    let task = new Task(name, description, dueDate,priority);
 
     addTaskToProject(project, task);
 
@@ -72,9 +91,7 @@ export function NewTaskForm(project, date = undefined) {
   return newTaskForm;
 }
 function isValidDate(date){
-  console.log(`Before parsing: ${date}`);
   date = parse(date, "yyyy-MM-dd", new Date())
-  console.log(`After Parsing: ${date}`);
     if(isValid(date)){
       let yearsFromToday = differenceInYears(date, new Date()) 
       if(yearsFromToday > -100 && yearsFromToday < 100){

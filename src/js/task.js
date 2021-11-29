@@ -11,12 +11,12 @@ export class Task {
    * @param {String} description - Description of the task
    * @param {Date} dueDate - Date the task is due
    */
-  constructor(name, description, dueDate) {
+  constructor(name, description, dueDate,priority = 5) {
     this.name = name;
     this.description = description;
     this.dueDate = dueDate;
     this.tags = [];
-    this.priority = 5; //Priority is ranked from 5 to 1. 1 being the highest
+    this.priority = priority;
     this.isDone = false;
     this.notes = [];
   }
