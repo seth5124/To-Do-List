@@ -57,6 +57,11 @@ export function NewTaskForm(project, date = undefined) {
     let description = descriptionInput.value;
     let dueDate = dateInput.value;
     let priority = priorityInput.value;
+
+    if(name.length < 1){
+      alert("Name cannot be blank");
+      return;
+    }
     
     if(!isValidDate(dueDate)){
       alert("Invalid date");
