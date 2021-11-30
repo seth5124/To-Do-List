@@ -66,4 +66,17 @@ export class Project {
   set name(name) {
     this._name = name;
   }
+  /**
+   * Sorts each date entry's tasks by their priority
+   * @returns Task list sorted by date then by priority
+   */
+  getTasksSorted(){
+    let dates = this.tasksByDate();
+    for(let date in dates){
+      dates[date] = dates[date].sort((a,b)=>{
+        return a.priority - b.priority;
+      })
+    }
+    return dates;
+  }
 }

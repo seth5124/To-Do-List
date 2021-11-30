@@ -13,7 +13,7 @@ import plusSVG from "../assets/plus.svg";
  * @returns {HTMLDivElement} HTMLDivElement - Div of ID "DateCards"
  */
 export function DateCards(project) {
-    let dateEntries = project.tasksByDate();
+    let dateEntries = project.getTasksSorted();
     let dateCards = document.createElement("div");
     dateCards.id = "DateCards";
 
