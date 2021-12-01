@@ -51,7 +51,9 @@ export function TaskCard(task) {
 
     let taskDescription = document.createElement("p");
     taskDescription.classList.add("editable");
-    taskDescription.innerHTML = task.description ? task.description : 'Add a description';
+    taskDescription.innerHTML = task.description
+        ? task.description
+        : "Add a description";
     taskDescription.addEventListener("dblclick", () => {
         editElement(
             taskDescription,
@@ -64,14 +66,40 @@ export function TaskCard(task) {
         );
     });
 
+    let taskPriority = document.createElement("h3");
+    taskPriority.classList.add("editable");
+    taskPriority.classList.add("taskHeaderElement");
+
+    taskPriority.innerHTML = `Priority: ${task.priority}`;
+    taskPriority.addEventListener("dblclick", () => {
+        editElement(
+            taskPriority,
+            () => {
+                taskPriority.innerHTML = `Priority: ${task.priority}`;
+                document.dispatchEvent(new CustomEvent("tasksUpdated"));
+            },
+            (newPriority) => {
+                task.priority = newPriority;
+            },
+            "select",
+            [1, 2, 3, 4, 5]
+        );
+    });
+
+
     taskHeader.appendChild(taskTitle);
-    taskHeader.append(
-        Object.assign(document.createElement("h1"), {
-            innerHTML: " - ",
-            className: "taskHeaderElement",
-        })
-    );
+    taskHeader.appendChild(Object.assign(document.createElement("h1"), {
+        innerHTML: " - ",
+        className: "taskHeaderElement",
+    }));
     taskHeader.appendChild(taskDueDate);
+    taskHeader.appendChild(    Object.assign(document.createElement("h1"), {
+        innerHTML: " - ",
+        className: "taskHeaderElement",
+    }));
+    taskHeader.appendChild(taskPriority);
+
+
     taskCard.appendChild(taskHeader);
     taskCard.appendChild(taskDescription);
 

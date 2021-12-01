@@ -9,11 +9,21 @@ export function editElement(
     node,
     reloadFunction,
     replaceFunction,
-    inputType = "text"
+    inputType = "text",
+    options = [],
 ) {
     let originalNode = node;
     let editBox = document.createElement("input");
     editBox.setAttribute("type", inputType);
+    if(inputType == 'select'){
+        editBox = document.createElement("select"); 
+        for(let option in options){
+            editBox.appendChild(Object.assign(document.createElement('option'),{
+                innerHTML: options[option],
+                value: options[option]
+            }))
+        }
+    }
     node.replaceWith(editBox);
     editBox.value = originalNode.innerHTML;
     editBox.focus();
