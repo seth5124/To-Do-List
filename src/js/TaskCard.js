@@ -13,6 +13,64 @@ export function TaskCard(task) {
 
     let taskHeader = document.createElement("div");
 
+    if (task.tags.length < 1) {
+        task.addTag("TestTag1");
+        task.addTag("TestTag2");
+        task.addTag("TestTag3");
+    }
+
+    let tagContainer = document.createElement("div");
+    tagContainer.classList.add("taskTagContainer");
+
+    function createTagDiv(tag) {
+        let tagDiv = document.createElement("div");
+        tagDiv.classList.add("taskTag");
+        let tagTitle = document.createElement("p");
+        tagTitle.innerHTML = tag;
+        tagDiv.appendChild(tagTitle);
+
+        return tagDiv;
+    }
+
+    for (let tag in task.tags) {
+        tagContainer.appendChild(createTagDiv(task.tags[tag]));
+    }
+    let newTagButton = createTagDiv("+");
+    newTagButton.addEventListener("click", () => {
+        let newTag = document.createElement("div");
+        let editField = document.createElement("input");
+        editField.classList.add("tagEditbox");
+        newTag.appendChild(editField);
+        editField.addEventListener("keyup", (e) => {
+            if (e.key == "Enter") {
+                let newTagValue = editField.value;
+
+                if (editField.value.length < 1 || editField.value.length > 15) {
+                    return;
+                }
+
+                if(task.tags.includes(newTagValue)){
+                    alert('Task already has this tag');
+                    return;
+                }
+
+                task.addTag(newTagValue);
+                document.dispatchEvent(
+                    new CustomEvent("TagCreated", {
+                        detail: {
+                            task: task,
+                            tag: newTagValue,
+                        },
+                    })
+                );
+                newTag.replaceWith(newTagButton);
+            }
+        });
+        newTagButton.replaceWith(newTag);
+        editField.focus();
+    });
+
+    tagContainer.appendChild(newTagButton);
     let taskTitle = document.createElement("h1");
     taskTitle.classList.add("taskHeaderElement");
     taskTitle.classList.add("editable");
@@ -86,19 +144,23 @@ export function TaskCard(task) {
         );
     });
 
-
     taskHeader.appendChild(taskTitle);
-    taskHeader.appendChild(Object.assign(document.createElement("h1"), {
-        innerHTML: " - ",
-        className: "taskHeaderElement",
-    }));
+    taskHeader.appendChild(
+        Object.assign(document.createElement("h1"), {
+            innerHTML: " - ",
+            className: "taskHeaderElement",
+        })
+    );
     taskHeader.appendChild(taskDueDate);
-    taskHeader.appendChild(    Object.assign(document.createElement("h1"), {
-        innerHTML: " - ",
-        className: "taskHeaderElement",
-    }));
+    taskHeader.appendChild(
+        Object.assign(document.createElement("h1"), {
+            innerHTML: " - ",
+            className: "taskHeaderElement",
+        })
+    );
     taskHeader.appendChild(taskPriority);
 
+    taskHeader.appendChild(tagContainer);
 
     taskCard.appendChild(taskHeader);
     taskCard.appendChild(taskDescription);

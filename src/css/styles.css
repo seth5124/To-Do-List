@@ -224,6 +224,30 @@ h3 {
 .taskHeaderElement {
     display: inline;
 }
+.taskTagContainer{
+    margin-top:.5rem;
+    margin-left: .5rem;
+    display: flex;
+    flex-flow: wrap;
+}
+.taskTag{
+    user-select: none;
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+    border-radius: 10px;
+    background-color: blueviolet;
+    margin-right: .5rem;
+    margin-top: .5rem;
+
+
+}
+.taskTag p{
+    padding: .5rem;
+}
+.taskTag:hover{
+    background-color: rgb(155, 67, 238);
+}
 #topBar {
     background: rgb(98, 98, 112);
     align-self: stretch;

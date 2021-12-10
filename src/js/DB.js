@@ -7,6 +7,7 @@ let homeProject = new Project("Home");
 //Project List service as the "database". This will at some point be replaced by an actual database
 let projects = {};
 
+let existingTags = [];
 /**
  * Adds a project to the database
  * @param {Project} project - Project object to add to the database
@@ -19,6 +20,12 @@ export function addProject(project) {
     projects[project.name] = project;
 }
 
+export function addExistingTag(tag){
+    existingTags.push(tag);
+}
+export function getExistingTags(){
+    return existingTags;
+}
 /**
  * Gets projects from the database
  * @returns {Object} Object containing project list

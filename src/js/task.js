@@ -48,6 +48,10 @@ export class Task {
   set tags(tags) {
     this._tags = tags;
   }
+  /**
+   * Adds a new tag to the task
+   * @param {String} tag Name of new tag
+   */
   addTag(tag) {
     this._tags.push(tag);
   }
