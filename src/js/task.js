@@ -54,9 +54,15 @@ export class Task {
    */
   addTag(tag) {
     this._tags.push(tag);
+    document.dispatchEvent(new CustomEvent('tagsUpdated',{detail:{
+      task:this
+  }}))
   }
-  removeTag(tagIndex) {
-    this.tags.splice(tagIndex, 1);
+  removeTag(tag) {
+    this.tags.splice(this.tags.indexOf(tag), 1);
+    document.dispatchEvent(new CustomEvent('tagsUpdated',{detail:{
+      task:this
+  }}))
   }
   get priority() {
     return this._priority;

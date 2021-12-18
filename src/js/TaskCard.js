@@ -13,21 +13,71 @@ export function TaskCard(task) {
 
     let taskHeader = document.createElement("div");
 
-    if (task.tags.length < 1) {
-        task.addTag("TestTag1");
-        task.addTag("TestTag2");
-        task.addTag("TestTag3");
-    }
-
     let tagContainer = document.createElement("div");
     tagContainer.classList.add("taskTagContainer");
+
+    function createNewTagButton() {
+        let newTagButton = document.createElement("div");
+        newTagButton.classList.add("taskTag");
+        let tagTitle = document.createElement("p");
+        tagTitle.innerHTML = "Add Tag +";
+        newTagButton.appendChild(tagTitle);
+
+        newTagButton.addEventListener("click", () => {
+            let newTag = document.createElement("div");
+            let editField = document.createElement("input");
+            editField.classList.add("tagEditbox");
+            newTag.appendChild(editField);
+            editField.addEventListener("keyup", (e) => {
+                if (e.key == "Enter") {
+                    let newTagValue = editField.value;
+                    let TAG_MAX_LENGTH = 15;
+                    let TAG_MIN_LENGTH = 1;
+
+                    if (
+                        editField.value.length < TAG_MIN_LENGTH ||
+                        editField.value.length > TAG_MAX_LENGTH
+                    ) {
+                        return;
+                    }
+
+                    if (task.tags.includes(newTagValue)) {
+                        alert("Task already has this tag");
+                        return;
+                    }
+
+                    task.addTag(newTagValue);
+                    document.dispatchEvent(
+                        new CustomEvent("tagsUpdated", {
+                            detail: {
+                                task: task,
+                            },
+                        })
+                    );
+                    newTag.replaceWith(newTagButton);
+                }
+            });
+            newTagButton.replaceWith(newTag);
+            editField.focus();
+        });
+
+        return newTagButton;
+    }
 
     function createTagDiv(tag) {
         let tagDiv = document.createElement("div");
         tagDiv.classList.add("taskTag");
         let tagTitle = document.createElement("p");
         tagTitle.innerHTML = tag;
+        let deleteButton = document.createElement("p");
+        deleteButton.innerHTML = "x";
+        function deleteTag() {
+            task.removeTag(tag);
+        }
+        deleteButton.addEventListener("click", deleteTag);
+
         tagDiv.appendChild(tagTitle);
+        tagDiv.appendChild(deleteButton);
 
         return tagDiv;
     }
@@ -35,40 +85,7 @@ export function TaskCard(task) {
     for (let tag in task.tags) {
         tagContainer.appendChild(createTagDiv(task.tags[tag]));
     }
-    let newTagButton = createTagDiv("+");
-    newTagButton.addEventListener("click", () => {
-        let newTag = document.createElement("div");
-        let editField = document.createElement("input");
-        editField.classList.add("tagEditbox");
-        newTag.appendChild(editField);
-        editField.addEventListener("keyup", (e) => {
-            if (e.key == "Enter") {
-                let newTagValue = editField.value;
-
-                if (editField.value.length < 1 || editField.value.length > 15) {
-                    return;
-                }
-
-                if(task.tags.includes(newTagValue)){
-                    alert('Task already has this tag');
-                    return;
-                }
-
-                task.addTag(newTagValue);
-                document.dispatchEvent(
-                    new CustomEvent("TagCreated", {
-                        detail: {
-                            task: task,
-                            tag: newTagValue,
-                        },
-                    })
-                );
-                newTag.replaceWith(newTagButton);
-            }
-        });
-        newTagButton.replaceWith(newTag);
-        editField.focus();
-    });
+    let newTagButton = createNewTagButton();
 
     tagContainer.appendChild(newTagButton);
     let taskTitle = document.createElement("h1");

@@ -1,6 +1,6 @@
 import { Project } from "./project.js";
 import { Sidebar } from "./Sidebar.js";
-import {getProjects, getHomeProject,getExistingTags, addExistingTag} from "./DB.js";
+import {getProjects, getHomeProject,getExistingTags, addExistingTag, removeExistingTag} from "./DB.js";
 import { DateCards } from "./DateCards.js";
 import { TopBar } from "./TopBar.js";
 import "../css/styles.css";
@@ -9,7 +9,6 @@ import { TaskCard } from "./TaskCard.js";
 
 //Initializes the active project as the Home project
 let activeProject = getHomeProject();
-let existingTags = getExistingTags();
 
 //Initializes all UI elements
 let content = document.getElementById("content");
@@ -38,14 +37,11 @@ document.addEventListener("tasksUpdated", (event) => {
     updateDateCards(project);
 });
 
-document.addEventListener('TagCreated',(event)=>{
-    let tag = event.detail.tag;
-    if(!existingTags.includes(tag)){
-        addExistingTag(tag);
-    }
-    updateTaskCard(event.detail.task);
-    console.log(`existing tags: ${getExistingTags()}`)
+document.addEventListener('tagsUpdated',(event)=>{
+    updateTaskCard(event.detail.task);      
+    updateSidebar();
 })
+
 
 /**
  * Reloads Sidebar element with latest project data

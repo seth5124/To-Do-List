@@ -16,7 +16,6 @@ export function Sidebar() {
   let projectList = Object.assign(document.createElement("ul"),{
     id: 'projectList',
   })
-  projectList.appendChild(ProjectEntry(getHomeProject()));
 
   
   let projects = getProjects();

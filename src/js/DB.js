@@ -6,32 +6,44 @@ let homeProject = new Project("Home");
 
 //Project List service as the "database". This will at some point be replaced by an actual database
 let projects = {};
+addProject(homeProject);
 
-let existingTags = [];
 /**
  * Adds a project to the database
  * @param {Project} project - Project object to add to the database
  */
 export function addProject(project) {
-    if (!(project instanceof Project)) {
-        console.log(`Not a project`);
-        return;
-    }
-    projects[project.name] = project;
+  if (!(project instanceof Project)) {
+    console.log(`Not a project`);
+    return;
+  }
+  projects[project.name] = project;
 }
 
-export function addExistingTag(tag){
-    existingTags.push(tag);
-}
-export function getExistingTags(){
-    return existingTags;
+
+export function getExistingTags() {
+  let existingTags = [];
+  let projects = getProjects();
+  for (let project in projects) {
+    let tasks = projects[project].tasks;
+    for (let task in tasks) {
+      let tags = tasks[task].tags;
+      for (let tag in tags) {
+        if (!existingTags.includes(tags[tag])) {
+          existingTags.push(tags[tag]);
+        }
+      }
+    }
+  }
+
+  return existingTags;
 }
 /**
  * Gets projects from the database
  * @returns {Object} Object containing project list
  */
 export function getProjects() {
-    return projects;
+  return projects;
 }
 
 /**
@@ -39,7 +51,7 @@ export function getProjects() {
  * @returns {Project} Project - Home project
  */
 export function getHomeProject() {
-    return homeProject;
+  return homeProject;
 }
 
 /**
@@ -47,7 +59,7 @@ export function getHomeProject() {
  * @param {Project} project - Project to delete
  */
 export function deleteProject(project) {
-    delete projects[project.name];
+  delete projects[project.name];
 }
 /**
  * Adds a task to a given project
@@ -55,7 +67,7 @@ export function deleteProject(project) {
  * @param {Task} task - Task to add to the project
  */
 export function addTaskToProject(project, task) {
-    project.addTask(task);
+  project.addTask(task);
 }
 
 /**
@@ -64,5 +76,5 @@ export function addTaskToProject(project, task) {
  * @param {Task} task - task to remove
  */
 export function removeTaskFromProject(project, task) {
-    project.removeTask(task);
+  project.removeTask(task);
 }
