@@ -1,7 +1,8 @@
 import { NewProjectForm } from "./NewProjectForm.js";
-import { getProjects,getHomeProject } from "./DB.js";
+import { getProjects,getHomeProject, getExistingTags } from "./DB.js";
 import { showPopup } from "./popup.js";
 import homeIcon from '../assets/home.svg';
+import { Project } from "./project.js";
 
 /**
  * Renders sidebar containing entries for each project
@@ -25,6 +26,7 @@ export function Sidebar() {
   }
   sidebar.appendChild(projectList);
   sidebar.appendChild(NewProjectButton());
+  sidebar.appendChild(existingTagsList());
   return sidebar;
 }
 
@@ -84,5 +86,34 @@ function ProjectEntry(project) {
   projectEntry.appendChild(projectHeader);
 
   return projectEntry;
+}
+
+function existingTagsList(){
+
+  let tags = getExistingTags();
+  let tagList = document.createElement('ul');
+  tagList.classList.add('sidebarTagList'); 
+  for(let tag in tags){
+    tag = tags[tag];
+    let tagEntry = document.createElement('div');
+    tagEntry.classList.add('sidebarTagEntry');
+    tagEntry.innerHTML = tag;
+    tagEntry.addEventListener('click',()=>{
+      let tasksWithTag = []
+      let projects = getProjects();
+      for(let project in projects){
+        let tasks = projects[project].tasks
+        for(let task in tasks){
+          if(tasks[task].tags.includes(tag)){
+            tasksWithTag.push(tasks[task]);
+          }
+        }
+      }
+      
+      document.dispatchEvent(new CustomEvent("projectChanged", { detail:new Project(`Tasks With Tag: ${tag}`,tasksWithTag) }));
+    })
+    tagList.appendChild(tagEntry);
+  }
+  return tagList;
 }
 

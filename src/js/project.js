@@ -3,9 +3,9 @@
  * @param {String} name - Name of the project
  */
 export class Project {
-  constructor(name) {
+  constructor(name, tasks = []) {
     this.name = name;
-    this.tasks = [];
+    this.tasks = tasks;
   }
 
   get tasks() {

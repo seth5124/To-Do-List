@@ -38,7 +38,9 @@ document.addEventListener("tasksUpdated", (event) => {
 });
 
 document.addEventListener('tagsUpdated',(event)=>{
-    updateTaskCard(event.detail.task);      
+    if(event.detail){
+        updateTaskCard(event.detail.task); 
+    }
     updateSidebar();
 })
 

@@ -61,6 +61,9 @@ export function DateCards(project) {
                 document.dispatchEvent(
                     new CustomEvent("tasksUpdated", { detail: project })
                 );
+                document.dispatchEvent(
+                    new CustomEvent("tagsUpdated")
+                );
             });
 
             dateCardEntry.appendChild(deleteButton);
