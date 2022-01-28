@@ -22,7 +22,7 @@ makeProjectEntryActive(activeProject);
 document.addEventListener("projectChanged", (event) => {
     let project = event.detail;
     activeProject = project;
-    updateTopBar();
+    updateTopBar(project);
     updateSidebar();
     updateDateCards(activeProject);
     makeProjectEntryActive(activeProject);

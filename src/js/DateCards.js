@@ -1,5 +1,5 @@
 import { NewTaskForm } from "./NewTaskForm.js";
-import { deleteTask, removeTaskFromProject } from "./DB.js";
+import { deleteTask, getHomeProject} from "./DB.js";
 import { TaskCard } from "./TaskCard.js";
 import { showPopup } from "./popup.js";
 import { format, isToday, isTomorrow, isThisYear} from "date-fns";
@@ -16,6 +16,8 @@ export function DateCards(project) {
     let dateEntries = project.getTasksSorted();
     let dateCards = document.createElement("div");
     dateCards.id = "DateCards";
+
+    let localTaskCount = 0;
 
     for (let date in dateEntries) {
         date = new Date(date);
@@ -48,6 +50,7 @@ export function DateCards(project) {
 
         for (let task in dateEntries[date]) {
             let currentTask = dateEntries[date][task];
+            localTaskCount++;
 
             let dateCardEntry = document.createElement("li");
             dateCardEntry.classList.add("dateCardEntry");
@@ -59,9 +62,13 @@ export function DateCards(project) {
                 e.stopPropagation();
                 //removeTaskFromProject(project, currentTask);
                 deleteTask(currentTask);
+                localTaskCount--;
                 document.dispatchEvent(
                     new CustomEvent("tagsUpdated")
                 );
+                if(project.isTemp && localTaskCount < 1){
+                    document.dispatchEvent(new CustomEvent("projectChanged",{detail: getHomeProject()}));
+                  }
             });
 
             dateCardEntry.appendChild(deleteButton);

@@ -3,8 +3,8 @@ import { Task } from "./task.js";
 import{v4 as uuidv4} from "uuid";
 
 //This is a project object containing all the tasks under Home
-let homeProject = new Project({name: uuidv4()});
-homeProject.isHomeProject = true;
+let homeProject = new Project({name: uuidv4(), isHomeProject: true});
+
 
 //Project List service as the "database". This will at some point be replaced by an actual database
 let projects = {};
@@ -94,6 +94,7 @@ export function deleteTask(taskToDelete){
         document.dispatchEvent(
           new CustomEvent("tasksUpdated", { detail: project })
       );
+
       }
     }
   }
