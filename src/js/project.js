@@ -6,11 +6,12 @@ import { v4 as uuidv4 } from "uuid";
  * @param {String} name - Name of the project
  */
 export class Project {
-  constructor({name, tasks = [], id = uuidv4(), isHomeProject = false}) {
+  constructor({name, tasks = [], id = uuidv4(), isHomeProject = false, isTemp = false}) {
     this.name = name;
     this.id = id;
     this.tasks = tasks;
     this.isHomeProject = isHomeProject;
+    this.isTemp = isTemp;
   }
 
   get tasks() {

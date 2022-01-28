@@ -110,7 +110,7 @@ function existingTagsList(){
         }
       }
       
-      document.dispatchEvent(new CustomEvent("projectChanged", { detail:new Project({name:`Tasks With Tag: ${tag}`,tasks: tasksWithTag}) }));
+      document.dispatchEvent(new CustomEvent("projectChanged", { detail:new Project({name:`Tasks With Tag: ${tag}`,tasks: tasksWithTag,isTemp: true}) }));
     })
     tagList.appendChild(tagEntry);
   }

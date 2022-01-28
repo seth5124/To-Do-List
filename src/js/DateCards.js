@@ -96,14 +96,18 @@ export function DateCards(project) {
                 showPopup(TaskCard(currentTask));
             });
         }
+        
+        if(!project.isTemp){
+            let newTaskButton = document.createElement("img");
+            newTaskButton.src = plusSVG;
+            newTaskButton.classList.add("newTaskButton");
+            newTaskButton.addEventListener("click", () => {
+                showPopup(NewTaskForm(project, date));
+            });
+            dateCardList.appendChild(newTaskButton);
+    
 
-        let newTaskButton = document.createElement("img");
-        newTaskButton.src = plusSVG;
-        newTaskButton.classList.add("newTaskButton");
-        newTaskButton.addEventListener("click", () => {
-            showPopup(NewTaskForm(project, date));
-        });
-        dateCardList.appendChild(newTaskButton);
+        }
 
         dateCardContent.appendChild(dateCardList);
         dateCards.appendChild(dateCard);
@@ -133,7 +137,9 @@ export function DateCards(project) {
         return blankDateCard;
     }
 
-    dateCards.appendChild(BlankDateCard(project));
+    if(!project.isTemp){
+        dateCards.appendChild(BlankDateCard(project));
+    }
 
     return dateCards;
 }
