@@ -1,5 +1,5 @@
 import { NewTaskForm } from "./NewTaskForm.js";
-import { removeTaskFromProject } from "./DB.js";
+import { deleteTask, removeTaskFromProject } from "./DB.js";
 import { TaskCard } from "./TaskCard.js";
 import { showPopup } from "./popup.js";
 import { format, isToday, isTomorrow, isThisYear} from "date-fns";
@@ -57,10 +57,8 @@ export function DateCards(project) {
 
             deleteButton.addEventListener("click", function (e) {
                 e.stopPropagation();
-                removeTaskFromProject(project, currentTask);
-                document.dispatchEvent(
-                    new CustomEvent("tasksUpdated", { detail: project })
-                );
+                //removeTaskFromProject(project, currentTask);
+                deleteTask(currentTask);
                 document.dispatchEvent(
                     new CustomEvent("tagsUpdated")
                 );

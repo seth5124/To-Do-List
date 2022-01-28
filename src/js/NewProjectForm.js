@@ -27,7 +27,7 @@ export function NewProjectForm() {
             alert("Project name cannot be blank!");
             return;
         }
-        let project = new Project(name);
+        let project = new Project({name: name});
         if(getProjects()[name]){
             alert("This project already exists");
             return;

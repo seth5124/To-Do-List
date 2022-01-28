@@ -1,4 +1,5 @@
 
+import { v4 as uuidv4 } from "uuid";
 /**
  * tasks hold a name, description and notes as well as
  * a priority from 5 to 1 and a list of tags
@@ -10,8 +11,9 @@ export class Task {
    * @param {String} name - Name of the task 
    * @param {String} description - Description of the task
    * @param {Date} dueDate - Date the task is due
+   * @param {UUID} project - ID of the project that the task is associated with
    */
-  constructor(name, description, dueDate,priority = 5) {
+  constructor(name, description, dueDate,priority = 5,project) {
     this.name = name;
     this.description = description;
     this.dueDate = dueDate;
@@ -19,6 +21,8 @@ export class Task {
     this.priority = priority;
     this.isDone = false;
     this.notes = [];
+    this.id = uuidv4();
+    this.project = project;
   }
 
   get name() {
@@ -26,6 +30,12 @@ export class Task {
   }
   set name(value) {
     this._name = value;
+  }
+  get project(){
+    return this._project;
+  }
+  set project(project){
+    this._project = project;
   }
   get description() {
     return this._description;

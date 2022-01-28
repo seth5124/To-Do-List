@@ -1,8 +1,10 @@
 import { Project } from "./project.js";
 import { Task } from "./task.js";
+import{v4 as uuidv4} from "uuid";
 
 //This is a project object containing all the tasks under Home
-let homeProject = new Project("Home");
+let homeProject = new Project({name: uuidv4()});
+homeProject.isHomeProject = true;
 
 //Project List service as the "database". This will at some point be replaced by an actual database
 let projects = {};
@@ -17,7 +19,7 @@ export function addProject(project) {
     console.log(`Not a project`);
     return;
   }
-  projects[project.name] = project;
+  projects[project.id] = project;
 }
 
 
@@ -59,7 +61,7 @@ export function getHomeProject() {
  * @param {Project} project - Project to delete
  */
 export function deleteProject(project) {
-  delete projects[project.name];
+  delete projects[project.id];
 }
 /**
  * Adds a task to a given project
@@ -77,4 +79,23 @@ export function addTaskToProject(project, task) {
  */
 export function removeTaskFromProject(project, task) {
   project.removeTask(task);
+}
+
+export function deleteTask(taskToDelete){
+
+  let projects = getProjects()
+  for(let project in projects){
+    project = projects[project];
+    let tasks = project.tasks;
+    for(let task in tasks){
+      task = tasks[task];
+      if(task.id == taskToDelete.id){
+        project.removeTask(task);
+        document.dispatchEvent(
+          new CustomEvent("tasksUpdated", { detail: project })
+      );
+      }
+    }
+  }
+  
 }

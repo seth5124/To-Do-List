@@ -57,7 +57,7 @@ function NewProjectButton() {
 function ProjectEntry(project) {
   let projectEntry = Object.assign(document.createElement('div'),{
     classList: 'projectEntry',
-    project: project.name,
+    project: project.id,
   })
   projectEntry.addEventListener("click", () => {
     document.dispatchEvent(
@@ -70,7 +70,7 @@ function ProjectEntry(project) {
   })
   let projectHeaderName;
   
-  if(project.name == getHomeProject().name){
+  if(project.id == getHomeProject().id){
     projectHeaderName = Object.assign(document.createElement('img'),{
       src: homeIcon,
       classList: 'homeIcon',
@@ -110,7 +110,7 @@ function existingTagsList(){
         }
       }
       
-      document.dispatchEvent(new CustomEvent("projectChanged", { detail:new Project(`Tasks With Tag: ${tag}`,tasksWithTag) }));
+      document.dispatchEvent(new CustomEvent("projectChanged", { detail:new Project({name:`Tasks With Tag: ${tag}`,tasks: tasksWithTag}) }));
     })
     tagList.appendChild(tagEntry);
   }

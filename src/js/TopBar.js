@@ -14,10 +14,12 @@ export function TopBar(project) {
 
   let topBarTitle = document.createElement("h1");
   topBarTitle.classList.add("topBarTitle");
-  topBarTitle.innerHTML = project.name;
+  topBarTitle.innerHTML = 'Home';
+  
 
   let deleteProjectButton;
-  if(project.name != getHomeProject().name){
+  if(project.id != getHomeProject().id){
+    topBarTitle.innerHTML = project.name;
     topBarTitle.classList.add('editable');
     topBarTitle.addEventListener('dblclick', () =>{
       editElement(topBarTitle, ()=>{

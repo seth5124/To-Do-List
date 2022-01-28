@@ -1,11 +1,16 @@
+
+import { v4 as uuidv4 } from "uuid";
+
 /**
  * Projects hold and arrange tasks and their due dates
  * @param {String} name - Name of the project
  */
 export class Project {
-  constructor(name, tasks = []) {
+  constructor({name, tasks = [], id = uuidv4(), isHomeProject = false}) {
     this.name = name;
+    this.id = id;
     this.tasks = tasks;
+    this.isHomeProject = isHomeProject;
   }
 
   get tasks() {
@@ -14,6 +19,12 @@ export class Project {
 
   set tasks(tasks) {
     this._tasks = tasks;
+  }
+  get isHomeProject(){
+    return this._isHomeProject;
+  }
+  set isHomeProject(val){
+    this._isHomeProject = val;
   }
 
   /**
@@ -61,11 +72,24 @@ export class Project {
   }
   
   get name() {
+    if(this.isHomeProject){
+      return "Home";
+    }
+    else{
     return this._name;
+    }
   }
   set name(name) {
     this._name = name;
   }
+
+  get id() {
+    return this._id;
+  }
+  set id(id){
+    this._id=id;
+  }
+  
   /**
    * Sorts each date entry's tasks by their priority
    * @returns Task list sorted by date then by priority
