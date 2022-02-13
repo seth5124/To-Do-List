@@ -1,5 +1,5 @@
 import { NewTaskForm } from "./NewTaskForm.js";
-import { deleteTask, getHomeProject} from "./DB.js";
+import { deleteTask, getHomeProject,tasksWithTag} from "./DB.js";
 import { TaskCard } from "./TaskCard.js";
 import { showPopup } from "./popup.js";
 import { format, isToday, isTomorrow, isThisYear} from "date-fns";
@@ -17,7 +17,8 @@ export function DateCards(project) {
     let dateCards = document.createElement("div");
     dateCards.id = "DateCards";
 
-    let localTaskCount = 0;
+    
+
 
     for (let date in dateEntries) {
         date = new Date(date);
@@ -50,7 +51,6 @@ export function DateCards(project) {
 
         for (let task in dateEntries[date]) {
             let currentTask = dateEntries[date][task];
-            localTaskCount++;
 
             let dateCardEntry = document.createElement("li");
             dateCardEntry.classList.add("dateCardEntry");
@@ -61,14 +61,30 @@ export function DateCards(project) {
             deleteButton.addEventListener("click", function (e) {
                 e.stopPropagation();
                 //removeTaskFromProject(project, currentTask);
+                
                 deleteTask(currentTask);
-                localTaskCount--;
+                if(project.isTemp){
+                    document.dispatchEvent(new CustomEvent("projectChanged", {
+                        detail:new Project(
+                            {
+                                name:`Tasks With Tag: ${project.associatedTag}`,
+                                tasks: tasksWithTag(project.associatedTag),
+                                isTemp: true
+                            }
+                            ) 
+                        }));
+                    if(project.tasks.length <= 1){
+                    document.dispatchEvent(new CustomEvent("projectChanged", {detail:getHomeProject()}));
+                    }
+                }
+                else{
+                    document.dispatchEvent(
+                        new CustomEvent("tasksUpdated", { detail: project })
+                    );
+                }
                 document.dispatchEvent(
                     new CustomEvent("tagsUpdated")
                 );
-                if(project.isTemp && localTaskCount < 1){
-                    document.dispatchEvent(new CustomEvent("projectChanged",{detail: getHomeProject()}));
-                  }
             });
 
             dateCardEntry.appendChild(deleteButton);
@@ -150,3 +166,5 @@ export function DateCards(project) {
 
     return dateCards;
 }
+
+

@@ -1,5 +1,5 @@
 import { NewProjectForm } from "./NewProjectForm.js";
-import { getProjects,getHomeProject, getExistingTags } from "./DB.js";
+import { getProjects,getHomeProject, getExistingTags, tasksWithTag } from "./DB.js";
 import { showPopup } from "./popup.js";
 import homeIcon from '../assets/home.svg';
 import { Project } from "./project.js";
@@ -99,18 +99,7 @@ function existingTagsList(){
     tagEntry.classList.add('sidebarTagEntry');
     tagEntry.innerHTML = tag;
     tagEntry.addEventListener('click',()=>{
-      let tasksWithTag = []
-      let projects = getProjects();
-      for(let project in projects){
-        let tasks = projects[project].tasks
-        for(let task in tasks){
-          if(tasks[task].tags.includes(tag)){
-            tasksWithTag.push(tasks[task]);
-          }
-        }
-      }
-      
-      document.dispatchEvent(new CustomEvent("projectChanged", { detail:new Project({name:`Tasks With Tag: ${tag}`,tasks: tasksWithTag,isTemp: true}) }));
+      document.dispatchEvent(new CustomEvent("projectChanged", { detail:new Project({name:`Tasks With Tag: ${tag}`,tasks: tasksWithTag(tag),isTemp: true, associatedTag: tag}) }));
     })
     tagList.appendChild(tagEntry);
   }

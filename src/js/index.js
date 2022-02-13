@@ -1,6 +1,6 @@
 import { Project } from "./project.js";
 import { Sidebar } from "./Sidebar.js";
-import {getProjects, getHomeProject,getExistingTags, addExistingTag, removeExistingTag} from "./DB.js";
+import {getProjects, getHomeProject} from "./DB.js";
 import { DateCards } from "./DateCards.js";
 import { TopBar } from "./TopBar.js";
 import "../css/styles.css";

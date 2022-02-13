@@ -6,12 +6,13 @@ import { v4 as uuidv4 } from "uuid";
  * @param {String} name - Name of the project
  */
 export class Project {
-  constructor({name, tasks = [], id = uuidv4(), isHomeProject = false, isTemp = false}) {
+  constructor({name, tasks = [], id = uuidv4(), isHomeProject = false, isTemp = false, associatedTag = null}) {
     this.name = name;
     this.id = id;
     this.tasks = tasks;
     this.isHomeProject = isHomeProject;
     this.isTemp = isTemp;
+    this.associatedTag = associatedTag;
   }
 
   get tasks() {
@@ -26,6 +27,14 @@ export class Project {
   }
   set isHomeProject(val){
     this._isHomeProject = val;
+  }
+
+  get associatedTag(){
+    return this._associatedTag;
+  }
+
+  set associatedTag(val){
+    this._associatedTag = val;
   }
 
   /**

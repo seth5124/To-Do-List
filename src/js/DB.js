@@ -91,12 +91,24 @@ export function deleteTask(taskToDelete){
       task = tasks[task];
       if(task.id == taskToDelete.id){
         project.removeTask(task);
-        document.dispatchEvent(
-          new CustomEvent("tasksUpdated", { detail: project })
-      );
+
 
       }
     }
   }
   
+}
+
+export function tasksWithTag(tag){
+  let tasksWithTag = []
+  let projects = getProjects();
+  for(let project in projects){
+    let tasks = projects[project].tasks
+    for(let task in tasks){
+      if(tasks[task].tags.includes(tag)){
+        tasksWithTag.push(tasks[task]);
+      }
+    }
+  }
+  return tasksWithTag;
 }
