@@ -31,21 +31,7 @@ export function TaskCard(task) {
             editField.addEventListener("keyup", (e) => {
                 if (e.key == "Enter") {
                     let newTagValue = editField.value;
-                    let TAG_MAX_LENGTH = 15;
-                    let TAG_MIN_LENGTH = 1;
-
-                    if (
-                        editField.value.length < TAG_MIN_LENGTH ||
-                        editField.value.length > TAG_MAX_LENGTH
-                    ) {
-                        return;
-                    }
-
-                    if (task.tags.includes(newTagValue)) {
-                        alert("Task already has this tag");
-                        return;
-                    }
-
+                    if(!isValidTag(newTagValue,task)) return;
                     task.addTag(newTagValue);
                     document.dispatchEvent(
                         new CustomEvent("tagsUpdated", {
@@ -157,7 +143,7 @@ export function TaskCard(task) {
                 task.priority = newPriority;
             },
             "select",
-            [1, 2, 3, 4, 5]
+            ['Emergency','Urgent','Routine']
         );
     });
 
@@ -274,4 +260,26 @@ function loadNotes(task) {
     }
 
     return taskNoteList;
+}
+
+
+function isValidTag(tag,attachedTask){
+
+        let TAG_MAX_LENGTH = 15;
+        let TAG_MIN_LENGTH = 1;
+
+        if (
+            tag.length < TAG_MIN_LENGTH ||
+            tag.length > TAG_MAX_LENGTH
+        ) {
+            return false;
+        }
+
+        if (attachedTask.tags.includes(tag)) {
+            return false;
+        }
+
+        return true;
+
+
 }
