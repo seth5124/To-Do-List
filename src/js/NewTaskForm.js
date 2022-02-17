@@ -34,11 +34,11 @@ export function NewTaskForm(project, date = undefined) {
     innerHTML: "Priority",
     value: "Priority"
   }))
-  let prorities = ['Emergency','Urgent','Routine'];
-  for(let i = 0; i <=2; i++){
+  let priorities = [{name: 'Emergency', value:0},{name: 'Urgent', value:1},{name: 'Routine', value:2}];
+  for(let priority in priorities){
     let option = document.createElement('option');
-    option.value = i;
-    option.innerHTML = prorities[i];
+    option.value = priorities[priority].value;
+    option.innerHTML = priorities[priority].name;
     priorityInput.appendChild(option);
   }
   newTaskForm.appendChild(priorityInput);

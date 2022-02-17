@@ -131,19 +131,19 @@ export function TaskCard(task) {
     taskPriority.classList.add("editable");
     taskPriority.classList.add("taskHeaderElement");
 
-    taskPriority.innerHTML = `Priority: ${task.priority}`;
+    taskPriority.innerHTML = `Priority: ${task.priorityName}`;
     taskPriority.addEventListener("dblclick", () => {
         editElement(
             taskPriority,
             () => {
-                taskPriority.innerHTML = `Priority: ${task.priority}`;
+                taskPriority.innerHTML = `Priority: ${task.priorityName}`;
                 document.dispatchEvent(new CustomEvent("tasksUpdated"));
             },
             (newPriority) => {
                 task.priority = newPriority;
             },
             "select",
-            ['Emergency','Urgent','Routine']
+            [{name: 'Emergency', value: 0},{name:"Urgent",value: 1},{name:'Routine',value:2}]
         );
     });
 

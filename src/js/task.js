@@ -13,7 +13,7 @@ export class Task {
    * @param {Date} dueDate - Date the task is due
    * @param {UUID} project - ID of the project that the task is associated with
    */
-  constructor(name, description, dueDate,priority = 5,project) {
+  constructor(name, description, dueDate,priority = 2,project) {
     this.name = name;
     this.description = description;
     this.dueDate = dueDate;
@@ -76,6 +76,16 @@ export class Task {
   }
   get priority() {
     return this._priority;
+  }
+  get priorityName(){
+    switch(this._priority){
+      case '0': 
+        return "Emergency"
+      case '1': 
+        return "Urgent"
+      case '2': 
+        return "Routine"
+    }
   }
   set priority(priority) {
     this._priority = priority;
