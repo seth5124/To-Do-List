@@ -68,6 +68,10 @@ export class Task {
       task:this
   }}))
   }
+  /**
+   * Gets index of tag and splices it from the tag list
+   * @param {Tag} tag tag to remove
+   */
   removeTag(tag) {
     this.tags.splice(this.tags.indexOf(tag), 1);
     document.dispatchEvent(new CustomEvent('tagsUpdated',{detail:{
@@ -77,6 +81,10 @@ export class Task {
   get priority() {
     return this._priority;
   }
+  /**
+   * Maps easily understandable names to integer priority values
+   * @returns Name corresponding to the priority value
+   */
   get priorityName(){
     switch(this._priority){
       case '0': 

@@ -1,6 +1,6 @@
 import { Project } from "./project.js";
 import { Sidebar } from "./Sidebar.js";
-import {getProjects, getHomeProject} from "./DB.js";
+import { getProjects, getHomeProject } from "./DB.js";
 import { DateCards } from "./DateCards.js";
 import { TopBar } from "./TopBar.js";
 import "../css/styles.css";
@@ -20,39 +20,41 @@ makeProjectEntryActive(activeProject);
 //projectChanged event fires any time project data needs to be updated
 //Updates all UI elements involving project data
 document.addEventListener("projectChanged", (event) => {
-    let project = event.detail;
-    activeProject = project;
-    updateTopBar(project);
-    updateSidebar();
-    updateDateCards(activeProject);
-    makeProjectEntryActive(activeProject);
+  let project = event.detail;
+  activeProject = project;
+  updateTopBar(project);
+  updateSidebar();
+  updateDateCards(activeProject);
+  makeProjectEntryActive(activeProject);
 });
-
 
 //tasksUpdated event fires any time task data changes
 //Updates all UI elements involving task data
 //Optional to pass in a project for this but defaults to the active project
 document.addEventListener("tasksUpdated", (event) => {
-    let project = event.detail ? event.detail : activeProject;
-    updateDateCards(project);
+  let project = event.detail ? event.detail : activeProject;
+  updateDateCards(project);
 });
 
-document.addEventListener('tagsUpdated',(event)=>{
-    if(event.detail){
-        updateTaskCard(event.detail.task); 
-    }
-    updateSidebar();
-})
-
+/**
+ * TagsUpdated fires when a tag is added or deleted. Causes the task card to reload to
+ * reflect updated tag list
+ */
+document.addEventListener("tagsUpdated", (event) => {
+  if (event.detail) {
+    updateTaskCard(event.detail.task);
+  }
+  updateSidebar();
+});
 
 /**
  * Reloads Sidebar element with latest project data
  */
 function updateSidebar() {
-    content.replaceChild(
-        Sidebar(getProjects()),
-        document.getElementById("sideBar")
-    );
+  content.replaceChild(
+    Sidebar(getProjects()),
+    document.getElementById("sideBar")
+  );
 }
 
 /**
@@ -60,23 +62,23 @@ function updateSidebar() {
  * @param {Project} project - Project to pull task data from
  */
 function updateDateCards(project) {
-    content.replaceChild(
-        DateCards(project),
-        document.getElementById("DateCards")
-    );
+  content.replaceChild(
+    DateCards(project),
+    document.getElementById("DateCards")
+  );
 }
 
 /**
  * Reloads top bar with latest project data
  */
 function updateTopBar() {
-    let topBar = document.getElementById("topBar");
-    topBar.replaceWith(TopBar(activeProject));
+  let topBar = document.getElementById("topBar");
+  topBar.replaceWith(TopBar(activeProject));
 }
 
-function updateTaskCard(task){
-    closePopup();
-    showPopup(TaskCard(task))
+function updateTaskCard(task) {
+  closePopup();
+  showPopup(TaskCard(task));
 }
 
 /**
@@ -84,15 +86,15 @@ function updateTaskCard(task){
  * @param {Project} project - Project to make active
  */
 function makeProjectEntryActive(project) {
-    let projectEntries = Array.from(
-        document.getElementById("projectList").children
-    );
-    for (let projectEntry in projectEntries) {
-        let entry = projectEntries[projectEntry];
-        if (entry.getAttribute("project") == project.name) {
-            entry.classList.add("active");
-        } else {
-            entry.classList.remove("active");
-        }
+  let projectEntries = Array.from(
+    document.getElementById("projectList").children
+  );
+  for (let projectEntry in projectEntries) {
+    let entry = projectEntries[projectEntry];
+    if (entry.getAttribute("project") == project.name) {
+      entry.classList.add("active");
+    } else {
+      entry.classList.remove("active");
     }
+  }
 }

@@ -2,9 +2,7 @@ import { addTaskToProject } from "./DB.js";
 import { closePopup } from "./popup.js";
 import { Task } from "./task.js";
 import { Project } from "./project.js";
-import { parse, format, isValid, differenceInYears} from "date-fns";
-
-
+import { parse, format, isValid, differenceInYears } from "date-fns";
 
 /**
  * Renders form to add a new task to a given project
@@ -13,7 +11,6 @@ import { parse, format, isValid, differenceInYears} from "date-fns";
  * @returns {HTMLDivElement} Div containing the form
  */
 export function NewTaskForm(project, date = undefined) {
-
   let newTaskForm = document.createElement("div");
 
   let formHeader = document.createElement("h1");
@@ -28,15 +25,21 @@ export function NewTaskForm(project, date = undefined) {
   descriptionInput.placeholder = "Description...";
   newTaskForm.appendChild(descriptionInput);
 
-  let priorityInput = document.createElement('select');
-  priorityInput.placeholder = 'Priority';
-  priorityInput.appendChild(Object.assign(document.createElement('option'),{
-    innerHTML: "Priority",
-    value: "Priority"
-  }))
-  let priorities = [{name: 'Emergency', value:0},{name: 'Urgent', value:1},{name: 'Routine', value:2}];
-  for(let priority in priorities){
-    let option = document.createElement('option');
+  let priorityInput = document.createElement("select");
+  priorityInput.placeholder = "Priority";
+  priorityInput.appendChild(
+    Object.assign(document.createElement("option"), {
+      innerHTML: "Priority",
+      value: "Priority",
+    })
+  );
+  let priorities = [
+    { name: "Emergency", value: 0 },
+    { name: "Urgent", value: 1 },
+    { name: "Routine", value: 2 },
+  ];
+  for (let priority in priorities) {
+    let option = document.createElement("option");
     option.value = priorities[priority].value;
     option.innerHTML = priorities[priority].name;
     priorityInput.appendChild(option);
@@ -45,8 +48,8 @@ export function NewTaskForm(project, date = undefined) {
 
   let dateInput = document.createElement("input");
   dateInput.type = "date";
-  if(date){
-    dateInput.value = format(new Date(date), 'yyyy-MM-dd');
+  if (date) {
+    dateInput.value = format(new Date(date), "yyyy-MM-dd");
   }
   newTaskForm.appendChild(dateInput);
 
@@ -59,23 +62,22 @@ export function NewTaskForm(project, date = undefined) {
     let dueDate = dateInput.value;
     let priority = priorityInput.value;
 
-    if(name.length < 1){
+    if (name.length < 1) {
       alert("Name cannot be blank");
       return;
     }
-    
-    if(!isValidDate(dueDate)){
+
+    if (!isValidDate(dueDate)) {
       alert("Invalid date");
       return;
-    }
-    else{
+    } else {
       dueDate = parse(dueDate, "yyyy-MM-dd", new Date());
     }
-    if(priority == 'Priority'){
+    if (priority == "Priority") {
       alert("Please select a priority");
       return;
     }
-    let task = new Task(name, description, dueDate,priority);
+    let task = new Task(name, description, dueDate, priority);
 
     addTaskToProject(project, task);
 
@@ -96,13 +98,13 @@ export function NewTaskForm(project, date = undefined) {
   newTaskForm.appendChild(closeButton);
   return newTaskForm;
 }
-function isValidDate(date){
-  date = parse(date, "yyyy-MM-dd", new Date())
-    if(isValid(date)){
-      let yearsFromToday = differenceInYears(date, new Date()) 
-      if(yearsFromToday > -100 && yearsFromToday < 100){
-        return true;
-      }
+function isValidDate(date) {
+  date = parse(date, "yyyy-MM-dd", new Date());
+  if (isValid(date)) {
+    let yearsFromToday = differenceInYears(date, new Date());
+    if (yearsFromToday > -100 && yearsFromToday < 100) {
+      return true;
     }
-    return false;
+  }
+  return false;
 }

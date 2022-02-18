@@ -88,6 +88,11 @@ function ProjectEntry(project) {
   return projectEntry;
 }
 
+/**
+ *  Creates a list of tag entries for each tag that exists
+ * Allows opening task views that display only tasks that contain the clicked tag
+ * @returns {ul} List of tag entries
+ */
 function existingTagsList(){
 
   let tags = getExistingTags();

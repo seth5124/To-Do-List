@@ -50,6 +50,11 @@ export function TaskCard(task) {
         return newTagButton;
     }
 
+    /**
+     * Creates a tag entry to add to the task card's tag list
+     * @param {Tag} tag Tag associated with tag div
+     * @returns {Div} Tag entry div
+     */
     function createTagDiv(tag) {
         let tagDiv = document.createElement("div");
         tagDiv.classList.add("taskTag");
@@ -262,7 +267,12 @@ function loadNotes(task) {
     return taskNoteList;
 }
 
-
+/**
+ * 
+ * @param {Tag} tag Tag to validate
+ * @param {Task} attachedTask Task that the tag is attached to
+ * @returns {Boolean} True if tag is valid, false if not
+ */
 function isValidTag(tag,attachedTask){
 
         let TAG_MAX_LENGTH = 15;

@@ -1,10 +1,9 @@
 import { Project } from "./project.js";
 import { Task } from "./task.js";
-import{v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 //This is a project object containing all the tasks under Home
-let homeProject = new Project({name: uuidv4(), isHomeProject: true});
-
+let homeProject = new Project({ name: uuidv4(), isHomeProject: true });
 
 //Project List service as the "database". This will at some point be replaced by an actual database
 let projects = {};
@@ -22,7 +21,10 @@ export function addProject(project) {
   projects[project.id] = project;
 }
 
-
+/**
+ * Iterates through each project's tasks and returns a set of all tags that exist
+ * @returns List of tags that exist across all tasks across all projects
+ */
 export function getExistingTags() {
   let existingTags = [];
   let projects = getProjects();
@@ -81,31 +83,36 @@ export function removeTaskFromProject(project, task) {
   project.removeTask(task);
 }
 
-export function deleteTask(taskToDelete){
-
-  let projects = getProjects()
-  for(let project in projects){
+/**
+ * Deletes given task
+ * @param {Task} taskToDelete Specifies task being deleted
+ */
+export function deleteTask(taskToDelete) {
+  let projects = getProjects();
+  for (let project in projects) {
     project = projects[project];
     let tasks = project.tasks;
-    for(let task in tasks){
+    for (let task in tasks) {
       task = tasks[task];
-      if(task.id == taskToDelete.id){
+      if (task.id == taskToDelete.id) {
         project.removeTask(task);
-
-
       }
     }
   }
-  
 }
 
-export function tasksWithTag(tag){
-  let tasksWithTag = []
+/**
+ * Gets a list of tasks across all projects that have the specififed tag
+ * @param {Tag} tag Tag to check for
+ * @returns List of tasks with given tag
+ */
+export function tasksWithTag(tag) {
+  let tasksWithTag = [];
   let projects = getProjects();
-  for(let project in projects){
-    let tasks = projects[project].tasks
-    for(let task in tasks){
-      if(tasks[task].tags.includes(tag)){
+  for (let project in projects) {
+    let tasks = projects[project].tasks;
+    for (let task in tasks) {
+      if (tasks[task].tags.includes(tag)) {
         tasksWithTag.push(tasks[task]);
       }
     }

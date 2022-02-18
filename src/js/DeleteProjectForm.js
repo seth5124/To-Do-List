@@ -8,28 +8,28 @@ import { Project } from "./project.js";
  * @returns {HTMLDivElement} Form to display
  */
 export function DeleteProjectForm(project) {
-    let deleteFormPrompt = document.createElement("div");
-    let deleteFormHeader = document.createElement("h1");
-    deleteFormHeader.innerHTML = `Delete ${project.name}?`;
-    deleteFormPrompt.appendChild(deleteFormHeader);
+  let deleteFormPrompt = document.createElement("div");
+  let deleteFormHeader = document.createElement("h1");
+  deleteFormHeader.innerHTML = `Delete ${project.name}?`;
+  deleteFormPrompt.appendChild(deleteFormHeader);
 
-    let yesButton = document.createElement("button");
-    yesButton.innerHTML = "Yes";
-    yesButton.addEventListener("click", () => {
-        deleteProject(project);
-        document.dispatchEvent(
-            new CustomEvent("projectChanged", { detail: getHomeProject() })
-        );
-        closePopup();
-    });
-    deleteFormPrompt.appendChild(yesButton);
+  let yesButton = document.createElement("button");
+  yesButton.innerHTML = "Yes";
+  yesButton.addEventListener("click", () => {
+    deleteProject(project);
+    document.dispatchEvent(
+      new CustomEvent("projectChanged", { detail: getHomeProject() })
+    );
+    closePopup();
+  });
+  deleteFormPrompt.appendChild(yesButton);
 
-    let noButton = document.createElement("button");
-    noButton.innerHTML = "No";
-    noButton.addEventListener("click", () => {
-        closePopup();
-    });
-    deleteFormPrompt.appendChild(noButton);
+  let noButton = document.createElement("button");
+  noButton.innerHTML = "No";
+  noButton.addEventListener("click", () => {
+    closePopup();
+  });
+  deleteFormPrompt.appendChild(noButton);
 
-    return deleteFormPrompt;
+  return deleteFormPrompt;
 }
