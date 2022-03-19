@@ -1,24 +1,96 @@
 import { Project } from "./project.js";
 import { Task } from "./task.js";
 import { v4 as uuidv4 } from "uuid";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { doc, setDoc,getFirestore,collection,query, getDocs, where} from "firebase/firestore";
+import * as firebaseConfig from "../keys/firestore.json";
+
+const configData = firebaseConfig;
+
+const firebaseConfigData = {
+  apiKey: configData.apiKey,
+
+  authDomain: configData.authDomain,
+
+  projectId: configData.projectId,
+
+  storageBucket: configData.storageBucket,
+
+  messagingSenderId: configData.messagingSenderId,
+
+  appId: configData.appId,
+
+  measurementId: configData.measurementId,
+};
+
+
+
+const app = initializeApp(firebaseConfigData);
+const analytics = getAnalytics(app);
+const db = getFirestore();
+
+
 
 //This is a project object containing all the tasks under Home
-let homeProject = new Project({ name: uuidv4(), isHomeProject: true });
+let homeProject = new Project({ name: 'Home', isHomeProject: true });
 
 //Project List service as the "database". This will at some point be replaced by an actual database
 let projects = {};
-addProject(homeProject);
+
+/**
+ * Checks for existence of Home project and adds the project if it doesn't exist
+ */
+async function initHome(){
+  // let homeExists = false;
+    
+  //   const docSnap = await getDocs(collection(db,'projects'))
+  //   docSnap.forEach((doc)=>{
+  //     if(doc.data().isHomeProject){
+  //       homeExists = true;
+  //     }
+  //   }
+  //   )
+  //   if(!homeExists){
+  //     addProject(homeProject);
+  //   }
+  
+  
+  let projectQuery = query(collection(db, 'projects'), where('isHomeProject', '==', 'true'));
+  let projects = await getDocs(projectQuery);
+  console.log(projects);
+  if((await getDocs(projectQuery)).empty){
+    console.log('No home project');
+    addProject(homeProject);
+  }
+  else{
+    console.log('found a project');
+  }
+
+}
+initHome(); 
+
+
 
 /**
  * Adds a project to the database
  * @param {Project} project - Project object to add to the database
  */
-export function addProject(project) {
+export async function addProject(project) {
   if (!(project instanceof Project)) {
     console.log(`Not a project`);
     return;
   }
   projects[project.id] = project;
+
+  await setDoc(doc(db,'projects',project.id),{
+    name:project.name,
+    tasks:project.tasks,
+    isHomeProject:project.isHomeProject
+  }).then(()=>{
+    console.log('Added project');
+  })
+
 }
 
 /**
