@@ -1,6 +1,6 @@
 import { Project } from "./project.js";
 import { Sidebar } from "./Sidebar.js";
-import { getProjects, getHomeProject } from "./DB.js";
+import { getProjects, getHomeProject, updateLocalStorage } from "./Controller.js";
 import { DateCards } from "./DateCards.js";
 import { TopBar } from "./TopBar.js";
 import "../css/styles.css";
@@ -34,6 +34,7 @@ document.addEventListener("projectChanged", (event) => {
 document.addEventListener("tasksUpdated", (event) => {
   let project = event.detail ? event.detail : activeProject;
   updateDateCards(project);
+  updateLocalStorage();
 });
 
 /**
@@ -45,6 +46,8 @@ document.addEventListener("tagsUpdated", (event) => {
     updateTaskCard(event.detail.task);
   }
   updateSidebar();
+  updateLocalStorage();
+
 });
 
 /**

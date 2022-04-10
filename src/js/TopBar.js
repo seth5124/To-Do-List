@@ -1,5 +1,5 @@
 import { editElement } from "./EditElement.js";
-import { getHomeProject } from "./DB.js";
+import { getHomeProject } from "./Controller.js";
 import { DeleteProjectForm } from "./DeleteProjectForm.js";
 import { showPopup } from "./popup.js";
 

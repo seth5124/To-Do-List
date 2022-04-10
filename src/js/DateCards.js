@@ -1,5 +1,5 @@
 import { NewTaskForm } from "./NewTaskForm.js";
-import { deleteTask, getHomeProject, tasksWithTag } from "./DB.js";
+import { deleteTask, getHomeProject, tasksWithTag } from "./Controller.js";
 import { TaskCard } from "./TaskCard.js";
 import { showPopup } from "./popup.js";
 import { format, isToday, isTomorrow, isThisYear } from "date-fns";

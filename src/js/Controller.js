@@ -1,13 +1,56 @@
 import { Project } from "./project.js";
 import { Task } from "./task.js";
 import { v4 as uuidv4 } from "uuid";
+import {parseISO} from "date-fns";
 
 //This is a project object containing all the tasks under Home
-let homeProject = new Project({ name: uuidv4(), isHomeProject: true });
+let homeProject = new Project({
+  name: "Home",
+  id: uuidv4(),
+  isHomeProject: true,
+});
 
-//Project List service as the "database". This will at some point be replaced by an actual database
+//Project List
 let projects = {};
-addProject(homeProject);
+
+if (window.localStorage.getItem("projects")) {
+  projects = getProjectsFromLocal();
+} else {
+  addProject(homeProject);
+}
+
+function getProjectsFromLocal() {
+  let localStorageData = JSON.parse(window.localStorage.getItem("projects"));
+  let projects = {};
+  for (let localStorageProject in localStorageData) {
+    let project = localStorageData[localStorageProject];
+    let taskList = [];
+    for(let task in project._tasks){
+      let currentTask = project._tasks[task];
+      let newTask =  new Task({
+        name: currentTask._name,
+        description: currentTask._description,
+        dueDate: parseISO(currentTask._dueDate, "yyyy-MM-dd", new Date()),
+        priority: currentTask._priority,
+        notes: currentTask._notes,
+        isDone: currentTask._isDone,
+        tags: currentTask._tags
+      });
+      taskList.push(newTask);
+    }
+    let newProject = new Project({
+      id: project._id,
+      name: project._name,
+      tasks: taskList,
+      isHomeProject: project._isHomeProject,
+    });
+    if(newProject.isHomeProject){
+      homeProject = newProject;
+    }
+    projects[newProject.id] = newProject;
+  }
+  return projects;
+}
 
 /**
  * Adds a project to the database
@@ -19,6 +62,14 @@ export function addProject(project) {
     return;
   }
   projects[project.id] = project;
+  updateLocalStorage();
+}
+
+/**
+ * Stores current project list in Browser localStorage
+ */
+export function updateLocalStorage(){
+  window.localStorage.setItem("projects", JSON.stringify(getProjects()));
 }
 
 /**
@@ -43,7 +94,7 @@ export function getExistingTags() {
   return existingTags;
 }
 /**
- * Gets projects from the database
+ * Gets projects from the project list
  * @returns {Object} Object containing project list
  */
 export function getProjects() {
@@ -59,11 +110,13 @@ export function getHomeProject() {
 }
 
 /**
- * Deletes a project from the database
+ * Deletes a project from the project list
  * @param {Project} project - Project to delete
  */
 export function deleteProject(project) {
   delete projects[project.id];
+  updateLocalStorage();
+
 }
 /**
  * Adds a task to a given project
@@ -72,6 +125,8 @@ export function deleteProject(project) {
  */
 export function addTaskToProject(project, task) {
   project.addTask(task);
+  updateLocalStorage();
+  projects = getProjectsFromLocal();
 }
 
 /**
@@ -81,6 +136,7 @@ export function addTaskToProject(project, task) {
  */
 export function removeTaskFromProject(project, task) {
   project.removeTask(task);
+  updateLocalStorage();
 }
 
 /**
@@ -96,6 +152,9 @@ export function deleteTask(taskToDelete) {
       task = tasks[task];
       if (task.id == taskToDelete.id) {
         project.removeTask(task);
+        updateLocalStorage();
+
+        
       }
     }
   }
@@ -119,3 +178,6 @@ export function tasksWithTag(tag) {
   }
   return tasksWithTag;
 }
+
+
+

@@ -1,3 +1,4 @@
+import { getProjects, updateLocalStorage } from "./Controller";
 /**
  *  Replaces a node with an edit box that will update that node's data and HTML
  * @param {Node} node Node to be replaced
@@ -41,5 +42,7 @@ export function editElement(
     editBox.replaceWith(originalNode);
     replaceFunction(newValue);
     reloadFunction();
+    updateLocalStorage();
+
   });
 }

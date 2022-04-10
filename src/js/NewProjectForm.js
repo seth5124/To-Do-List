@@ -1,4 +1,4 @@
-import { addProject, getProjects } from "./DB.js";
+import { addProject, getProjects } from "./Controller.js";
 import { closePopup } from "./popup.js";
 import { Project } from "./project.js";
 
@@ -22,16 +22,24 @@ export function NewProjectForm() {
   submitButton.type = "submit";
   submitButton.innerHTML = "Add";
   submitButton.addEventListener("click", () => {
-    let name = nameInput.value;
-    if (name.length < 1) {
+    let projectName = nameInput.value;
+    if (projectName.length < 1) {
       alert("Project name cannot be blank!");
       return;
     }
-    let project = new Project({ name: name });
-    if (getProjects()[name]) {
-      alert("This project already exists");
-      return;
+    let project = new Project({ name: projectName });
+    
+    let alreadyExists = false;
+    let projects = getProjects();
+    for(let currentProject in projects){
+      if (projects[currentProject].name == projectName) {
+        alert("This project already exists");
+        alreadyExists = true;
+        return;
+      }
     }
+    if(alreadyExists) return;
+
     addProject(project);
     document.dispatchEvent(
       new CustomEvent("projectChanged", { detail: project })

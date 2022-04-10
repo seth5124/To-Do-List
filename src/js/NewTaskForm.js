@@ -1,4 +1,4 @@
-import { addTaskToProject } from "./DB.js";
+import { addTaskToProject } from "./Controller.js";
 import { closePopup } from "./popup.js";
 import { Task } from "./task.js";
 import { Project } from "./project.js";
@@ -57,28 +57,33 @@ export function NewTaskForm(project, date = undefined) {
   submitButton.type = "submit";
   submitButton.innerHTML = "Add";
   submitButton.addEventListener("click", () => {
-    let name = nameInput.value;
-    let description = descriptionInput.value;
-    let dueDate = dateInput.value;
-    let priority = priorityInput.value;
+    let taskName = nameInput.value;
+    let taskDescription = descriptionInput.value;
+    let taskDueDate = dateInput.value;
+    let taskPriority = priorityInput.value;
 
-    if (name.length < 1) {
+    if (taskName.length < 1) {
       alert("Name cannot be blank");
       return;
     }
 
-    if (!isValidDate(dueDate)) {
+    if (!isValidDate(taskDueDate)) {
       alert("Invalid date");
       return;
     } else {
-      dueDate = parse(dueDate, "yyyy-MM-dd", new Date());
+      taskDueDate = parse(taskDueDate, "yyyy-MM-dd", new Date());
     }
-    if (priority == "Priority") {
+    if (taskPriority == "Priority") {
       alert("Please select a priority");
       return;
     }
-    let task = new Task(name, description, dueDate, priority);
-
+    let task = new Task({
+      name: taskName,
+      description: taskDescription,
+      dueDate: taskDueDate,
+      priority: taskPriority
+    });
+//new Task(name, description, dueDate, priority)
     addTaskToProject(project, task);
 
     document.dispatchEvent(

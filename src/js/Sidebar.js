@@ -1,5 +1,5 @@
 import { NewProjectForm } from "./NewProjectForm.js";
-import { getProjects,getHomeProject, getExistingTags, tasksWithTag } from "./DB.js";
+import { getProjects,getHomeProject, getExistingTags, tasksWithTag } from "./Controller.js";
 import { showPopup } from "./popup.js";
 import homeIcon from '../assets/home.svg';
 import { Project } from "./project.js";
