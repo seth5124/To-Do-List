@@ -1,4 +1,5 @@
 import { closePopup } from "./popup.js";
+import { getProjects } from "./Controller.js";
 import { format, parse } from "date-fns";
 import { editElement } from "./EditElement.js";
 import pencilSVG from "../assets/pencil.svg";
@@ -189,6 +190,8 @@ export function TaskCard(task) {
         newNoteBox.addEventListener("keyup", (event) => {
             if (event.key === "Enter") {
                 task.addNote(newNoteBox.value);
+                window.localStorage.setItem("projects", JSON.stringify(getProjects()));
+
                 document
                     .getElementById("taskNoteList")
                     .replaceWith(loadNotes(task));

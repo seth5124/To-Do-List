@@ -1,4 +1,4 @@
-import { deleteProject, getHomeProject } from "./DB";
+import { deleteProject, getHomeProject } from "./Controller";
 import { closePopup } from "./popup.js";
 import { Project } from "./project.js";
 
