@@ -126,7 +126,6 @@ export function deleteProject(project) {
 export function addTaskToProject(project, task) {
   project.addTask(task);
   updateLocalStorage();
-  projects = getProjectsFromLocal();
 }
 
 /**
